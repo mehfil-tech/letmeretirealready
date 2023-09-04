@@ -1,14 +1,14 @@
 "use client";
 
-import { createContext, useContext, useState } from "react";
+import { Dispatch, SetStateAction, createContext, useContext, useState } from "react";
 
 export const UserContext = createContext({
   savings: [{ saving: 0, interestRate: 0 }],
-  setSavings: (_) => {},
+  setSavings: (_: any) => {},
   expenses: 0,
-  setExpenses: (_) => {},
+  setExpenses: (_: any) => {},
   inflation: 0,
-  setInflation: (_) => {},
+  setInflation: (_: any) => {},
 });
 
 function UserStore({ children }: { children: React.ReactNode }) {

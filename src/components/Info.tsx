@@ -26,7 +26,7 @@ function UserInfo() {
         </div>
       </div>
       <div className="mb-4">
-        By the 4% rule, to retire, you'll need to save
+        By the 4% rule, to retire, you&apos;ll need to save
         <div className="text-4xl">
           {new Intl.NumberFormat("en-IN").format(newTargetValue)}
         </div>
