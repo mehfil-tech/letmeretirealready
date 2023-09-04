@@ -9,8 +9,8 @@ function Nav() {
   return (
     <nav className="flex-between w-full p-4 bg-slate-400 gap-3">
       {/* App title */}
-      <Link href="/" className="flex gap-2 flex-center">
-        <p className="text-2xl text-white font-mono">
+      <Link href="/" className="flex-center gap-2">
+        <p className="text-2xl text-white font-mono text-center">
           let me retire already
         </p>
       </Link>
