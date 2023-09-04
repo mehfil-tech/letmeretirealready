@@ -1,4 +1,5 @@
 import Nav from '@components/Nav'
+import RootStore from '@store'
 import '@styles/globals.css'
 
 export const metadata = {
@@ -15,10 +16,12 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <div className="main" />
-        <main className="app">
-          <Nav />
-          {children}
-        </main>
+        <RootStore>
+          <main className="app flex-column">
+            <Nav />
+            {children}
+          </main>
+        </RootStore>
       </body>
     </html>
   )

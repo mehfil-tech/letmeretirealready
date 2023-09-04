@@ -1,35 +1,38 @@
-"use client"
+"use client";
 
-import { useState } from "react";
+import { useUseStore } from "@store/User";
 
 function Savings() {
-    const [savings, setSavings] = useState([500, 1000]);
-    const [newSaving, setNewSaving] = useState("");
-    const onAddSaving = () => {
-        if (newSaving) {
-            const newSavingAmount = Number(newSaving);
-            setSavings([...savings, newSavingAmount]);
-            setNewSaving("");
-        }
-    }
-    return (
-        <section className="flex-1">
-            <div>Savings</div>
-            <ul>
-                {savings.map((saving) => (
-                    <li key={saving}>{saving}</li>
-                ))}
-            </ul>
-            <div>
-                <form className="flex">
-                    <input placeholder="enter savings" value={newSaving} onChange={(e) => { setNewSaving(e?.target?.value) }} type="number" />
-                    <input placeholder="enter interest rate" value={newSaving} onChange={(e) => { setNewSaving(e?.target?.value) }} type="number" />
-                    <button className="bg-blue-300 rounded-md text-white" onClick={onAddSaving}> Add Saving</button>
-                </form>
-
-            </div>
-        </section>
-    );
+  const { savings, setSavings } = useUseStore();
+  return (
+    <section className="flex-1">
+      <div>Savings</div>
+      <div className="flex gap-4">
+        <div>
+          <div className="text-xs text-slate-400">SIP Amount</div>
+          <input
+            placeholder="1000"
+            value={savings[0].saving}
+            onChange={(e) => {
+              setSavings([{ ...savings[0], saving: e?.target?.value }]);
+            }}
+            type="number"
+          />
+        </div>
+        <div>
+          <div className="text-xs text-slate-400">Expected interest rate</div>
+          <input
+            placeholder="12%"
+            value={savings[0].interestRate}
+            onChange={(e) => {
+              setSavings([{ ...savings[0], interestRate: e?.target?.value }]);
+            }}
+            type="number"
+          />
+        </div>
+      </div>
+    </section>
+  );
 }
 
 export default Savings;
