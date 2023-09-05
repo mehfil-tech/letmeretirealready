@@ -20,9 +20,10 @@ function Savings() {
           />
         </div>
         <div>
-          <div className="text-xs text-slate-400">Expected interest rate</div>
+          <div className="text-xs text-slate-400">Interest %</div>
           <input
             placeholder="12%"
+            className="w-16"
             value={savings[0].interestRate}
             onChange={(e) => {
               setSavings([

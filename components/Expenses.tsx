@@ -21,7 +21,7 @@ function Expenses() {
           />
         </div>
         <div>
-          <div className="text-xs text-slate-400">Inflation</div>
+          <div className="text-xs text-slate-400">Inflation %</div>
           <input
             className="w-16"
             placeholder="3"

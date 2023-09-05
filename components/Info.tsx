@@ -4,15 +4,21 @@
 
 import { useUseStore } from "@store/User";
 import { calculateYearsToExceedValue } from "@utils/lumsum";
+import useWindowDimensions from "@utils/useWindowDimensions";
+import { LineChart, Line, XAxis, Tooltip } from "recharts";
 
 function UserInfo() {
+  const { width, height } = useWindowDimensions();
   const { savings, inflation, expenses } = useUseStore();
-  const { newTargetValue, yearlyExpense, years } = calculateYearsToExceedValue(
-    savings[0].saving,
-    savings[0].interestRate,
-    expenses,
-    inflation
-  );
+  const { newTargetValue, yearlyExpense, years, chartData } =
+    calculateYearsToExceedValue(
+      savings[0].saving,
+      savings[0].interestRate,
+      expenses,
+      inflation
+    );
+  const chartWidth = width - 40;
+  const chartHeight = height > 400 ? 400 : height;
   return (
     <section className="flex-row p-4">
       <div className="mb-4">
@@ -30,6 +36,13 @@ function UserInfo() {
         <div className="text-4xl">
           {new Intl.NumberFormat("en-IN").format(newTargetValue)}
         </div>
+      </div>
+      <div className="mb-4 flex">
+        <LineChart width={chartWidth} height={chartHeight} data={chartData}>
+          <Line type="monotone" dataKey="value" stroke="#8884d8" />
+          <XAxis dataKey="year" />
+          <Tooltip />
+        </LineChart>
       </div>
     </section>
   );
