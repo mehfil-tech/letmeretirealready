@@ -27,7 +27,7 @@ export const calculateYearsToExceedValue = (
   years: number;
   newTargetValue: number;
   yearlyExpense: number;
-  chartData: [any];
+  chartData: { year: number; value: number }[];
 } => {
   let years = 0;
   let currentValue = 0;
