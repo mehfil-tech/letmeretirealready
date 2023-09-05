@@ -1,6 +1,12 @@
 "use client";
 
-import { Dispatch, SetStateAction, createContext, useContext, useState } from "react";
+import {
+  Dispatch,
+  SetStateAction,
+  createContext,
+  useContext,
+  useState,
+} from "react";
 
 export const UserContext = createContext({
   savings: [{ saving: 0, interestRate: 0 }],
@@ -12,8 +18,8 @@ export const UserContext = createContext({
 });
 
 function UserStore({ children }: { children: React.ReactNode }) {
-  const [savings, setSavings] = useState([{ saving: 0, interestRate: 12 }]);
-  const [expenses, setExpenses] = useState(0);
+  const [savings, setSavings] = useState([{ saving: 30000, interestRate: 12 }]);
+  const [expenses, setExpenses] = useState(30000);
   const [inflation, setInflation] = useState(3);
 
   return (

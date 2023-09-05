@@ -14,7 +14,7 @@ function Savings() {
             placeholder="1000"
             value={savings[0].saving}
             onChange={(e) => {
-              setSavings([{ ...savings[0], saving: e?.target?.value }]);
+              setSavings([{ ...savings[0], saving: Number(e?.target?.value) }]);
             }}
             type="number"
           />
@@ -25,7 +25,9 @@ function Savings() {
             placeholder="12%"
             value={savings[0].interestRate}
             onChange={(e) => {
-              setSavings([{ ...savings[0], interestRate: e?.target?.value }]);
+              setSavings([
+                { ...savings[0], interestRate: Number(e?.target?.value) },
+              ]);
             }}
             type="number"
           />

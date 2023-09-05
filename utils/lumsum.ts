@@ -6,19 +6,13 @@ const calculateStepUpSIPValue = (
   years: number,
   stepUpPercentage = 0
 ): number => {
-  const monthlyInterestRate = annualInterestRate / 12 / 100;
-  const totalMonths = years * 12;
+  const annualInterestRateDecimal = annualInterestRate / 100;
   let sipValue = 0;
   let monthlyInvestment = initialMonthlyInvestment;
-
-  for (let month = 1; month <= totalMonths; month++) {
-    sipValue += monthlyInvestment;
-    sipValue *= 1 + monthlyInterestRate;
-
-    if (month % 12 === 0) {
-      // Increase the monthly investment amount annually
-      monthlyInvestment += (monthlyInvestment * stepUpPercentage) / 100;
-    }
+  for (let year = 1; year <= years; year++) {
+    sipValue += monthlyInvestment * 12;
+    sipValue *= 1 + annualInterestRateDecimal;
+    monthlyInvestment += (monthlyInvestment * stepUpPercentage) / 100;
   }
 
   return sipValue;
@@ -41,7 +35,6 @@ export const calculateYearsToExceedValue = (
       annualGrowthRate,
       years
     );
-    console.log("The value of sip", currentValue);
     yearlyExpense *= 1 + inflationRate / 100;
     newTargetValue = yearlyExpense / 0.04;
     years++;
@@ -53,7 +46,7 @@ export const calculateYearsToExceedValue = (
   }
 
   return {
-    years: Math.round(years),
+    years,
     newTargetValue: Math.round(newTargetValue),
     yearlyExpense: Math.round(yearlyExpense / 12),
   };
