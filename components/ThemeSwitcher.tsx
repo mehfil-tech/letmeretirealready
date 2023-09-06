@@ -17,7 +17,7 @@ export const ThemeSwitcher = () => {
 
   return (
     <button
-      className={`w-fit right-5 top-2 p-2 rounded-full hover:scale-110 active:scale-100 duration-200 bg-slate-400`}
+      className={`absolute w-fit right-5 top-4 p-2 rounded-full hover:scale-125 active:scale-100 duration-200 bg-slate-300 dark:bg-slate-700`}
       onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
     >
       {theme === "light" ? <IoSunnyOutline /> : <IoMoon />}
