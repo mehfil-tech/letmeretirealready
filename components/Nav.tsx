@@ -8,9 +8,9 @@ import { ThemeSwitcher } from "./ThemeSwitcher";
 function Nav() {
   const isUserLoggedIn = true;
   return (
-    <nav className="flex w-full p-4 gap-3">
+    <nav className="sticky top-0 flex w-full p-4 gap-3 bg-white dark:bg-gray-800">
       {/* App title */}
-      <Link href="/" className="flex-center gap-2">
+      <Link href="/" className="flex-center gap-3">
         <p className="text-2xl font-mono text-center">let me retire already</p>
       </Link>
       <ThemeSwitcher />

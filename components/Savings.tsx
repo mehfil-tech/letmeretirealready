@@ -1,38 +1,27 @@
 "use client";
 
-import { useUseStore } from "@store/User";
+import { useUserStore } from "@store/User";
+import UserSaving from "./UserSaving";
+import { PlaceholderSaving, Saving } from "@models/Saving";
+import AddSaving from "./AddSaving";
 
 function Savings() {
-  const { savings, setSavings } = useUseStore();
+  const { savings } = useUserStore();
+
   return (
-    <section className="flex-1">
-      <div>Savings</div>
-      <div className="flex gap-4">
-        <div>
-          <div className="text-xs mb-1">SIP Amount</div>
-          <input
-            className="rounded-md pl-2 pr-2 bg-zinc-200 dark:bg-zinc-700"
-            placeholder="1000"
-            value={savings[0].saving}
-            onChange={(e) => {
-              setSavings([{ ...savings[0], saving: Number(e?.target?.value) }]);
-            }}
-            type="numeric"
-          />
+    <section className="flex-1 w-full mt-4">
+      <div>
+        <div className="mb-2 ml-4 flex gap-3">
+          Savings ({savings.length}) <AddSaving />
         </div>
-        <div>
-          <div className="text-xs mb-1">Interest %</div>
-          <input
-            placeholder="12%"
-            className="w-16 rounded-md pl-2 pr-2 bg-zinc-200 dark:bg-zinc-700"
-            value={savings[0].interestRate}
-            onChange={(e) => {
-              setSavings([
-                { ...savings[0], interestRate: Number(e?.target?.value) },
-              ]);
-            }}
-            type="numeric"
-          />
+        <div className="overflow-scroll scroll-container">
+          <div className="flex space-x-4 ml-4">
+            {savings.map((saving, index) => {
+              return (
+                <UserSaving key={index} saving={saving} canAddSaving={false} />
+              );
+            })}
+          </div>
         </div>
       </div>
     </section>

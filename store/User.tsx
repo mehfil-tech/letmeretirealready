@@ -1,15 +1,20 @@
 "use client";
 
-import {
-  Dispatch,
-  SetStateAction,
-  createContext,
-  useContext,
-  useState,
-} from "react";
+import { createContext, useContext, useState } from "react";
+import { PlaceholderSaving, Saving } from "@models/Saving";
+import { SavingType } from "@models/SavingType";
 
-export const UserContext = createContext({
-  savings: [{ saving: 0, interestRate: 0 }],
+type ContextType = {
+  savings: Saving[];
+  setSavings: (savings: Saving[]) => void;
+  expenses: number;
+  setExpenses: (expenses: number) => void;
+  inflation: number;
+  setInflation: (inflation: number) => void;
+};
+
+export const UserContext = createContext<ContextType>({
+  savings: [],
   setSavings: (_: any) => {},
   expenses: 0,
   setExpenses: (_: any) => {},
@@ -18,7 +23,8 @@ export const UserContext = createContext({
 });
 
 function UserStore({ children }: { children: React.ReactNode }) {
-  const [savings, setSavings] = useState([{ saving: 30000, interestRate: 12 }]);
+  // The first element is always going to be the placeholder saving
+  const [savings, setSavings] = useState<Saving[]>([PlaceholderSaving]);
   const [expenses, setExpenses] = useState(30000);
   const [inflation, setInflation] = useState(3);
 
@@ -38,7 +44,7 @@ function UserStore({ children }: { children: React.ReactNode }) {
   );
 }
 
-export function useUseStore() {
+export function useUserStore() {
   return useContext(UserContext);
 }
 

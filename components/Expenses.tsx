@@ -1,18 +1,18 @@
 "use client";
 
-import { useUseStore } from "@store/User";
-import { useState } from "react";
+import { useUserStore } from "@store/User";
+import { BOX_STYLE } from "./UserSaving";
 
 function Expenses() {
-  const { expenses, setExpenses, inflation, setInflation } = useUseStore();
+  const { expenses, setExpenses, inflation, setInflation } = useUserStore();
   return (
-    <section className="flex-1 mt-6">
+    <section className="flex-1 ml-4">
       <div>Expenses</div>
       <div className="flex items-start gap-4">
         <div>
-          <div className="text-xs mb-1">Monthly Expenses</div>
+          <div className="text-xs mb-1 mt-1">Amount</div>
           <input
-            className="rounded-md pl-2 pr-2 bg-zinc-200 dark:bg-zinc-700"
+            className={`${BOX_STYLE} w-32`}
             placeholder="30000"
             type="numeric"
             value={expenses}
@@ -22,9 +22,9 @@ function Expenses() {
           />
         </div>
         <div>
-          <div className="text-xs mb-1">Inflation %</div>
+          <div className="text-xs mb-1 mt-1">Inflation %</div>
           <input
-            className="w-16 rounded-md pl-2 pr-2 bg-zinc-200 dark:bg-zinc-700"
+            className={BOX_STYLE}
             placeholder="3"
             type="numeric"
             value={inflation}

@@ -15,11 +15,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>
+      <body className="bg-white dark:bg-gray-800">
         <div className="main" />
         <RootStore>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-            <main className="app flex-column">
+            <main className="app flex-column ">
               <Nav />
               {children}
             </main>

@@ -2,27 +2,28 @@
 
 "use client";
 
-import { useUseStore } from "@store/User";
-import { calculateYearsToExceedValue } from "@utils/lumsum";
+import { PlaceholderSaving } from "@models/Saving";
+import { useUserStore } from "@store/User";
+import { calculateYearsToExceedValue } from "@utils/calculateRetirement";
 import useWindowDimensions from "@utils/useWindowDimensions";
 import { LineChart, Line, XAxis, Tooltip } from "recharts";
 
 function UserInfo() {
   const { width, height } = useWindowDimensions();
-  const { savings, inflation, expenses } = useUseStore();
-  const { newTargetValue, yearlyExpense, years, chartData } =
+  const { savings, inflation, expenses } = useUserStore();
+  const { newTargetValue, yearlyExpense, years, chartData, currentValue } =
     calculateYearsToExceedValue(
-      savings[0].saving,
-      savings[0].interestRate,
+      PlaceholderSaving.amount,
+      PlaceholderSaving.interestRate,
       expenses,
       inflation
     );
   const chartWidth = width ? width - 40 : 400;
-  const chartHeight = height ? (height > 400 ? 400 : height) : 400;
+  const chartHeight = 200;
   return (
     <section className="flex-row p-4">
       <div className="mb-4">
-        Number of years required to retire
+        Years to retirement
         <div className="text-4xl">{years}</div>
       </div>
       <div className="mb-4">
@@ -32,12 +33,12 @@ function UserInfo() {
         </div>
       </div>
       <div className="mb-4">
-        By the 4% rule, to retire, you&apos;ll need to save
+        Total savings after {years} years
         <div className="text-4xl">
-          {new Intl.NumberFormat("en-IN").format(newTargetValue)}
+          {new Intl.NumberFormat("en-IN").format(currentValue)}
         </div>
       </div>
-      <div className="mb-4 flex">
+      <div className="flex">
         <LineChart width={chartWidth} height={chartHeight} data={chartData}>
           <Line type="monotone" dataKey="value" stroke="#8884d8" />
           <XAxis dataKey="year" />

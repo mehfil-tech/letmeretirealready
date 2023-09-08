@@ -27,6 +27,7 @@ export const calculateYearsToExceedValue = (
   years: number;
   newTargetValue: number;
   yearlyExpense: number;
+  currentValue: number;
   chartData: { year: number; value: number }[];
 } => {
   let years = 0;
@@ -64,6 +65,7 @@ export const calculateYearsToExceedValue = (
     years,
     newTargetValue: Math.round(newTargetValue),
     yearlyExpense: Math.round(yearlyExpense / 12),
+    currentValue: Math.round(currentValue),
     chartData,
   };
 };
