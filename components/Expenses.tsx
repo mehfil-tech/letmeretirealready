@@ -17,7 +17,7 @@ function Expenses() {
             type="numeric"
             value={expenses}
             onChange={(e) => {
-              setExpenses(e?.target?.value);
+              setExpenses(Number(e?.target?.value));
             }}
           />
         </div>
@@ -29,7 +29,7 @@ function Expenses() {
             type="numeric"
             value={inflation}
             onChange={(e) => {
-              setInflation(e?.target?.value);
+              setInflation(Number(e?.target?.value));
             }}
           />
         </div>

@@ -23,7 +23,7 @@ function Saving({
     setSavings(savings.map((s) => (s.id === saving.id ? saving : s)));
   };
   return (
-    <div className="flex flex-col border-solid border shadow-gray-200 shadow-lg dark:bg-gray-900 mb-4 p-4 pt-3 rounded-lg">
+    <div className="flex flex-col bg-neutral-100 dark:bg-gray-900 mb-4 p-4 pt-3 rounded-lg">
       <div className="flex gap-3 w-full">
         <div className="w-full">
           <div className="text-xs mb-1">Name</div>
@@ -69,7 +69,9 @@ function Saving({
               }}
             >
               {Object.values(SavingType).map((type) => (
-                <option value={type}>{type}</option>
+                <option key={type} value={type}>
+                  {type}
+                </option>
               ))}
             </select>
             <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2">
@@ -91,7 +93,9 @@ function Saving({
               }}
             >
               {Object.keys(Frequency).map((type) => (
-                <option value={type}>{type}</option>
+                <option key={type} value={type}>
+                  {type}
+                </option>
               ))}
             </select>
             <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2">
