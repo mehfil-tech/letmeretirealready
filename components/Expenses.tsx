@@ -21,18 +21,6 @@ function Expenses() {
             }}
           />
         </div>
-        <div>
-          <div className="text-xs mb-1 mt-1">Inflation %</div>
-          <input
-            className={BOX_STYLE}
-            placeholder="3"
-            type="numeric"
-            value={inflation}
-            onChange={(e) => {
-              setInflation(Number(e?.target?.value));
-            }}
-          />
-        </div>
       </div>
     </section>
   );

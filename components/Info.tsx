@@ -38,13 +38,13 @@ function UserInfo() {
           {new Intl.NumberFormat("en-IN").format(currentValue)}
         </div>
       </div>
-      <div className="flex">
+      {/* <div className="flex">
         <LineChart width={chartWidth} height={chartHeight} data={chartData}>
           <Line type="monotone" dataKey="value" stroke="#8884d8" />
           <XAxis dataKey="year" />
           <Tooltip />
         </LineChart>
-      </div>
+      </div> */}
     </section>
   );
 }

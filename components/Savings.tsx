@@ -14,7 +14,7 @@ function Savings() {
         <div className="mb-2 ml-4 flex gap-3">
           Savings ({savings.length}) <AddSaving />
         </div>
-        <div className="overflow-scroll scroll-container">
+        <div className="overflow-auto">
           <div className="flex space-x-4 ml-4">
             {savings.map((saving, index) => {
               return (
