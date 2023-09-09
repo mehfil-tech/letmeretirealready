@@ -8,8 +8,7 @@ import { Frequency } from "@models/Frequency";
 
 import "react-datepicker/dist/react-datepicker.css";
 
-export const BOX_STYLE =
-  "h-10 rounded-md pl-3 pr-2 bg-zinc-200 dark:bg-zinc-700";
+export const BOX_STYLE = "h-10 rounded-md pl-3 pr-2 bg-white dark:bg-zinc-700";
 
 function Saving({
   saving,
@@ -23,7 +22,7 @@ function Saving({
     setSavings(savings.map((s) => (s.id === saving.id ? saving : s)));
   };
   return (
-    <div className="flex flex-col bg-neutral-100 dark:bg-gray-900 mb-4 p-4 pt-3 rounded-lg">
+    <div className="flex flex-col bg-neutral-100 dark:bg-gray-900 mb-4 p-4 pt-3 rounded-lg transition-opacity duration-500 opacity-100">
       <div className="flex gap-3 w-full">
         <div className="w-full">
           <div className="text-xs mb-0.5">Name</div>
@@ -134,7 +133,7 @@ function Saving({
       <div className="flex-1">
         <div className="text-xs mb-0.5 mt-2">End Date</div>
         <DatePicker
-          className={`${BOX_STYLE}`}
+          className={`${BOX_STYLE} -z-10`}
           selected={saving.endDate}
           onChange={(date: any) =>
             setSaving({

@@ -38,35 +38,33 @@ function AddSaving() {
     }
   };
   return (
-    <div className="flex gap-3">
-      <button
-        className={`rounded-full hover:scale-125 active:scale-100 duration-200 bg-slate-300 dark:bg-slate-700 text-2xl`}
-        onClick={() => {
-          // Validate savings[0]
-          if (
-            savings.length > 0 &&
-            (!savings[0].name ||
-              savings[0].amount === 0 ||
-              !savings[0].interestRate)
-          ) {
-            setInputValidity(INPUT_VALIDITY.INVALID);
-            return;
-          }
-          setInputValidity(INPUT_VALIDITY.VALID);
-          savings.length > 0
-            ? setSavings([
-                PlaceholderSaving,
-                { ...savings[0], id: Math.random() },
-                ...savings.slice(1),
-              ])
-            : setSavings([PlaceholderSaving]);
-          console.log("added ", JSON.stringify(savings[0]));
-        }}
-      >
-        {<IoAdd />}
-      </button>
-      {renderMessage()}
-    </div>
+    <button
+      onClick={() => {
+        // Validate savings[0]
+        if (
+          savings.length > 0 &&
+          (!savings[0].name ||
+            savings[0].amount === 0 ||
+            !savings[0].interestRate)
+        ) {
+          setInputValidity(INPUT_VALIDITY.INVALID);
+          return;
+        }
+        setInputValidity(INPUT_VALIDITY.VALID);
+        savings.length > 0
+          ? setSavings([
+              { ...PlaceholderSaving, id: -Math.random() },
+              savings[0],
+              ...savings.slice(1),
+            ])
+          : setSavings([PlaceholderSaving]);
+        console.log("added ", JSON.stringify(savings[0]));
+      }}
+      className="flex gap-3 rounded-full hover:scale-105 active:scale-100 duration-200 bg-slate-300 dark:bg-slate-700 p-2 pr-4 m-4 justify-center"
+    >
+      <div className={` text-2xl`}>{<IoAdd />}</div>
+      <div>Add Saving</div>
+    </button>
   );
 }
 

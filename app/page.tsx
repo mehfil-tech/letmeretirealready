@@ -1,6 +1,6 @@
 import Expenses from "@components/Expenses";
-import UserInfo from "@components/Info";
-import Savings from "@components/Savings";
+import UserInfo from "@components/UserInfo";
+import Savings from "@components/UserSavings";
 
 function Home() {
   return (
