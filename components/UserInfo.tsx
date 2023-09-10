@@ -18,8 +18,6 @@ function UserInfo() {
       expenses,
       inflation
     );
-  const chartWidth = width ? width - 40 : 400;
-  const chartHeight = 200;
   return (
     <section className="flex-row p-4">
       <div className="mb-4">

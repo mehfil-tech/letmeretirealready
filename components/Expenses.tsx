@@ -1,7 +1,7 @@
 "use client";
 
 import { useUserStore } from "@store/User";
-import { BOX_STYLE } from "./UserSaving";
+import { BOX_STYLE } from "./NewUserSaving";
 
 function Expenses() {
   const { expenses, setExpenses, inflation, setInflation } = useUserStore();
