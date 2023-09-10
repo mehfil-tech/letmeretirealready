@@ -1,7 +1,7 @@
 "use client";
 
 import { useUserStore } from "@store/User";
-import UserSaving from "./NewUserSaving";
+import UserSaving from "./UserSaving";
 
 function UserSavings() {
   const { savings } = useUserStore();
@@ -12,7 +12,7 @@ function UserSavings() {
         <div className="overflow-auto">
           <div className="flex space-x-4 ml-4">
             {savings.map((saving, index) => {
-              return <UserSaving saving={saving} canAddSaving={false} />;
+              return <UserSaving key={saving.id} saving={saving} />;
             })}
           </div>
         </div>

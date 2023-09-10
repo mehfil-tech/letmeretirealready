@@ -18,7 +18,7 @@ function UserSavings() {
       </section>
       <section className="flex flex-col m-4 gap-4">
         {savings.map((saving, index) => {
-          return <UserSaving saving={saving} />;
+          return <UserSaving key={saving.id} saving={saving} />;
         })}
       </section>
     </div>
