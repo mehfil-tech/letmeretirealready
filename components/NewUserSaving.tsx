@@ -1,28 +1,29 @@
-import { SavingType } from "@models/SavingType";
+import { FinancialActivityType } from "@models/FinancialActivityType";
 import { IoCaretDown } from "react-icons/io5";
 import DatePicker from "react-datepicker";
-import RemoveSaving from "./RemoveSaving";
-import { Saving } from "@models/Saving";
+import RemoveFinancialActivity from "./RemoveFinancialActivity";
+import { FinancialActivity } from "@models/FinancialActivity";
 import { useUserStore } from "@store/User";
 import { Frequency } from "@models/Frequency";
 
 import "react-datepicker/dist/react-datepicker.css";
 
-export const BOX_STYLE = "h-10 rounded-md pl-3 pr-2 bg-white dark:bg-zinc-700";
+export const BOX_STYLE =
+  "w-full h-10 rounded-md pl-3 pr-2 bg-white dark:bg-zinc-700";
 
-function NewUserSaving({
-  saving,
-  canAddSaving,
-}: {
-  saving: Saving;
-  canAddSaving: boolean;
-}) {
-  const { savings, setSavings } = useUserStore();
-  const setSaving = (saving: Saving) => {
-    setSavings(savings.map((s) => (s.id === saving.id ? saving : s)));
+function NewUserFinancialActivity() {
+  const { financialActivities: fa } = useUserStore();
+  const financialActivity = fa[0];
+  const { financialActivities, setFinancialActivities } = useUserStore();
+  const setFinancialActivity = (financialActivity: FinancialActivity) => {
+    setFinancialActivities(
+      financialActivities.map((f) =>
+        f.id === financialActivity.id ? financialActivity : f
+      )
+    );
   };
   return (
-    <div className="flex flex-col bg-neutral-100 dark:bg-gray-900 mb-4 p-4 pt-3 rounded-lg transition-opacity duration-500 opacity-100">
+    <div className="flex flex-col m-4 bg-neutral-100 dark:bg-gray-900 p-4 pt-3 rounded-lg transition-opacity duration-500 opacity-100">
       <div className="flex gap-3 w-full">
         <div className="w-full">
           <div className="text-xs mb-0.5">Name</div>
@@ -30,9 +31,12 @@ function NewUserSaving({
             <input
               className={`${BOX_STYLE} w-full`}
               placeholder="Mutual funds"
-              value={saving?.name}
+              value={financialActivity?.name}
               onChange={(e) => {
-                setSaving({ ...saving, name: e?.target?.value ?? "" });
+                setFinancialActivity({
+                  ...financialActivity,
+                  name: e?.target?.value ?? "",
+                });
               }}
               type="text"
             />
@@ -43,42 +47,43 @@ function NewUserSaving({
         <div className="flex-col w-full">
           <div className="text-xs mb-0.5">Amount</div>
           <input
-            className={`${BOX_STYLE} w-full`}
+            className={`${BOX_STYLE}`}
             placeholder="1000"
-            value={saving?.amount}
+            value={financialActivity?.amount}
             onChange={(e) => {
-              setSaving({ ...saving, amount: Number(e?.target?.value) });
+              setFinancialActivity({
+                ...financialActivity,
+                amount: Number(e?.target?.value),
+              });
             }}
             type="numeric"
           />
         </div>
       </div>
-
       <div className="">
         <div className="text-xs mb-0.5 mt-2">Interest Rate</div>
         <input
           placeholder="12%"
           className={`${BOX_STYLE}`}
-          value={saving?.interestRate}
+          value={financialActivity?.interestRate}
           onChange={(e) => {
-            setSaving({
-              ...saving,
+            setFinancialActivity({
+              ...financialActivity,
               interestRate: Number(e?.target?.value),
             });
           }}
           type="numeric"
         />
       </div>
-
       <div className="flex-col flex-1">
         <div className="text-xs mb-0.5 mt-2">Interval</div>
         <div className="relative">
           <select
-            className={`${BOX_STYLE} appearance-none  w-full`}
-            value={saving?.frequency}
+            className={`${BOX_STYLE} appearance-none`}
+            value={financialActivity?.frequency}
             onChange={(e) => {
-              setSaving({
-                ...saving,
+              setFinancialActivity({
+                ...financialActivity,
                 frequency: e?.target?.value as Frequency,
               });
             }}
@@ -96,16 +101,16 @@ function NewUserSaving({
         <div className="text-xs mb-0.5 mt-2">Type</div>
         <div className="relative">
           <select
-            className={`${BOX_STYLE} appearance-none w-full`}
-            value={saving?.type}
+            className={`${BOX_STYLE} appearance-none`}
+            value={financialActivity?.type}
             onChange={(e) => {
-              setSaving({
-                ...saving,
-                type: e?.target?.value as SavingType,
+              setFinancialActivity({
+                ...financialActivity,
+                type: e?.target?.value as FinancialActivityType,
               });
             }}
           >
-            {Object.values(SavingType).map((type) => (
+            {Object.values(FinancialActivityType).map((type) => (
               <option key={type} value={type}>
                 {type}
               </option>
@@ -116,39 +121,37 @@ function NewUserSaving({
           </div>
         </div>
       </div>
-
-      <div className="flex-1">
+      <div className="">
         <div className="text-xs mb-0.5 mt-2">Start Date</div>
         <DatePicker
           className={`${BOX_STYLE}`}
-          selected={saving.startDate}
+          selected={financialActivity.startDate}
           onChange={(date: any) =>
-            setSaving({
-              ...saving,
+            setFinancialActivity({
+              ...financialActivity,
               startDate: date,
             })
           }
         />
       </div>
-      <div className="flex-1">
+      <div className="">
         <div className="text-xs mb-0.5 mt-2">End Date</div>
         <DatePicker
-          className={`${BOX_STYLE} -z-10`}
-          selected={saving.endDate}
+          className={`${BOX_STYLE} bg-black`}
+          selected={financialActivity.endDate}
           onChange={(date: any) =>
-            setSaving({
-              ...saving,
+            setFinancialActivity({
+              ...financialActivity,
               endDate: date,
             })
           }
         />
       </div>
-
       <div className="flex">
-        <RemoveSaving saving={saving} />
+        <RemoveFinancialActivity financialActivity={financialActivity} />
       </div>
     </div>
   );
 }
 
-export default NewUserSaving;
+export default NewUserFinancialActivity;

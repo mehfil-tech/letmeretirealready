@@ -1,5 +1,5 @@
 import { Frequency } from "./Frequency";
-import { SavingType } from "./SavingType";
+import { SavingType } from "./ActivityType";
 
 // Saving model
 export interface Saving {
@@ -22,6 +22,5 @@ export const PlaceholderSaving = {
   endDate: new Date(new Date().setFullYear(new Date().getFullYear() + 100)),
   id: -1,
   name: "New Saving",
-  type: SavingType.SIP,
   stepupPercentage: 0,
 };

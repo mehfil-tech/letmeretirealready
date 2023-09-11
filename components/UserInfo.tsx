@@ -2,47 +2,39 @@
 
 "use client";
 
+import { PlaceholderFinancialActivity } from "@models/FinancialActivity";
 import { PlaceholderSaving } from "@models/Saving";
 import { useUserStore } from "@store/User";
-import { calculateYearsToExceedValue } from "@utils/calculateRetirement";
+import { calculateDateToExceedValue } from "@utils/calculateRetirement";
 import useWindowDimensions from "@utils/useWindowDimensions";
 import { LineChart, Line, XAxis, Tooltip } from "recharts";
 
 function UserInfo() {
   const { width, height } = useWindowDimensions();
-  const { savings, inflation, expenses } = useUserStore();
-  const { newTargetValue, yearlyExpense, years, chartData, currentValue } =
-    calculateYearsToExceedValue(
-      PlaceholderSaving.amount,
-      PlaceholderSaving.interestRate,
-      expenses,
-      inflation
-    );
+  const { financialActivities, inflation, expenses } = useUserStore();
+  const { date, monthlyExpenses, value } = calculateDateToExceedValue(
+    financialActivities,
+    expenses,
+    inflation
+  );
   return (
     <section className="flex-row p-4">
       <div className="mb-4">
-        Years to retirement
-        <div className="text-4xl">{years}</div>
+        You will retire in {date?.toLocaleDateString()}
+        <div className="text-4xl">{}</div>
       </div>
       <div className="mb-4">
-        Expenses after {years} years
+        Expenses in {date?.getFullYear()}
         <div className="text-4xl">
-          {new Intl.NumberFormat("en-IN").format(yearlyExpense)}
+          {new Intl.NumberFormat("en-IN").format(monthlyExpenses)}
         </div>
       </div>
       <div className="mb-4">
-        Total savings after {years} years
+        Total savings in {date?.getFullYear()}
         <div className="text-4xl">
-          {new Intl.NumberFormat("en-IN").format(currentValue)}
+          {new Intl.NumberFormat("en-IN").format(value)}
         </div>
       </div>
-      {/* <div className="flex">
-        <LineChart width={chartWidth} height={chartHeight} data={chartData}>
-          <Line type="monotone" dataKey="value" stroke="#8884d8" />
-          <XAxis dataKey="year" />
-          <Tooltip />
-        </LineChart>
-      </div> */}
     </section>
   );
 }

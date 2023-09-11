@@ -39,7 +39,7 @@ export const calculateDateToExceedValue = (
   activities: FinancialActivity[],
   initialExpense: number,
   inflationRate: number
-): Date | null => {
+): ({date: Date | null, value: number, monthlyExpenses: number}) => {
   let totalValue = 0;
   let monthlyExpense = initialExpense;
   let newTargetValue = monthlyExpense / 0.04;
@@ -93,5 +93,9 @@ export const calculateDateToExceedValue = (
     }
   }
 
-  return new Date(currentYear, currentMonth);
+  return {
+    date: new Date(currentYear, currentMonth),
+    value: Math.round(totalValue),
+    monthlyExpenses: Math.round(monthlyExpense),
+  };
 };

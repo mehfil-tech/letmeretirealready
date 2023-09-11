@@ -2,7 +2,7 @@
 
 import AddSaving from "@components/AddSaving";
 import UserInfo from "@components/UserInfo";
-import UserSaving from "@components/UserSaving";
+import UserSaving from "@components/UserFinancialActivity";
 import { useUserStore } from "@store/User";
 
 function UserSavings() {

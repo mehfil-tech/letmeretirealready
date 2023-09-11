@@ -12,9 +12,9 @@ function Nav() {
   return (
     <nav className="p-4 flex justify-between">
       <Link href="/">
-        <p className="text-2xl font-mono">lmra</p>
+        <p className="text-2xl font-mono">let me retire already</p>
       </Link>
-      <div className="flex gap-4 items-center">
+      {/* <div className="flex gap-4 items-center">
         <Link href="/home">
           <p>Home</p>
         </Link>
@@ -24,7 +24,7 @@ function Nav() {
         <Link href="/expenses">
           <p>Expenses</p>
         </Link>
-      </div>
+      </div> */}
     </nav>
   );
 }
