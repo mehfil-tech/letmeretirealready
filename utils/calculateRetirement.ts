@@ -35,7 +35,7 @@ const shouldContributeThisMonth = (
   }
 };
 
-const calculateDateToExceedValue = (
+export const calculateDateToExceedValue = (
   activities: FinancialActivity[],
   initialExpense: number,
   inflationRate: number
@@ -43,6 +43,7 @@ const calculateDateToExceedValue = (
   let totalValue = 0;
   let monthlyExpense = initialExpense;
   let newTargetValue = monthlyExpense / 0.04;
+  let accumulatedInterest = 0;
 
   const earliestStartDate = activities.reduce(
     (prevDate, activity) =>
@@ -62,11 +63,18 @@ const calculateDateToExceedValue = (
           contribution +
           (contribution * (activity.stepUpPercentage || 0)) / 100;
 
-        // Compound individual contribution by its own interest rate
-        totalValue += adjustedContribution * (1 + activity.interestRate / 1200);
+        totalValue += adjustedContribution;
+
+        // Accumulate interest for the year
+        accumulatedInterest +=
+          adjustedContribution * (activity.interestRate / 100);
       }
     }
-
+    if (currentMonth === 11) {
+      // End of the year
+      totalValue += accumulatedInterest; // Add accumulated interest to total value
+      accumulatedInterest = 0; // Reset for next year
+    }
     monthlyExpense *= 1 + inflationRate / 1200;
     newTargetValue = monthlyExpense / 0.04;
 
@@ -87,5 +95,3 @@ const calculateDateToExceedValue = (
 
   return new Date(currentYear, currentMonth);
 };
-
-export default calculateDateToExceedValue;
