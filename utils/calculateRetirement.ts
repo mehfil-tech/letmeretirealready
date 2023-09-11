@@ -35,13 +35,22 @@ const shouldContributeThisMonth = (
   }
 };
 
+const calculateInitialExpense = (activities: FinancialActivity[]): number => {
+  return activities
+    .filter(
+      (activity) =>
+        activity.type === FinancialActivityType.Expense &&
+        activity.frequency === Frequency.Monthly
+    )
+    .reduce((sum, activity) => sum + activity.amount, 0);
+};
+
 export const calculateDateToExceedValue = (
   activities: FinancialActivity[],
-  initialExpense: number,
   inflationRate: number
-): ({date: Date | null, value: number, monthlyExpenses: number}) => {
+): { date: Date | null; value: number; monthlyExpenses: number } => {
   let totalValue = 0;
-  let monthlyExpense = initialExpense;
+  let monthlyExpense = calculateInitialExpense(activities);
   let newTargetValue = monthlyExpense / 0.04;
   let accumulatedInterest = 0;
 
@@ -89,7 +98,7 @@ export const calculateDateToExceedValue = (
       new Date().setFullYear(new Date().getFullYear() + 100)
     ) {
       // Stop after 100 years to avoid infinite loop
-      return null;
+      return { date: null, value: -1, monthlyExpenses: -1 };
     }
   }
 

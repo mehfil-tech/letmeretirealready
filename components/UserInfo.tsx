@@ -2,19 +2,13 @@
 
 "use client";
 
-import { PlaceholderFinancialActivity } from "@models/FinancialActivity";
-import { PlaceholderSaving } from "@models/Saving";
 import { useUserStore } from "@store/User";
 import { calculateDateToExceedValue } from "@utils/calculateRetirement";
-import useWindowDimensions from "@utils/useWindowDimensions";
-import { LineChart, Line, XAxis, Tooltip } from "recharts";
 
 function UserInfo() {
-  const { width, height } = useWindowDimensions();
-  const { financialActivities, inflation, expenses } = useUserStore();
-  const { date, monthlyExpenses, value } = calculateDateToExceedValue(
-    financialActivities,
-    expenses,
+  const { financialActivities, inflation } = useUserStore();
+  const { date, value, monthlyExpenses } = calculateDateToExceedValue(
+    financialActivities.slice(1),
     inflation
   );
   return (
