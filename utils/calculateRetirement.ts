@@ -1,72 +1,91 @@
-// Calculate a lumsum based on a given amount and a given interest rate for a given period of time compounded annually
+import { FinancialActivity } from "@models/FinancialActivity";
+import { FinancialActivityType } from "@models/FinancialActivityType";
+import { Frequency } from "@models/Frequency";
 
-const calculateStepUpSIPValue = (
-  initialMonthlyInvestment: number,
-  annualInterestRate: number,
-  years: number,
-  stepUpPercentage = 0
-): number => {
-  const annualInterestRateDecimal = annualInterestRate / 100;
-  let sipValue = 0;
-  let monthlyInvestment = initialMonthlyInvestment;
-  for (let year = 1; year <= years; year++) {
-    sipValue += monthlyInvestment * 12;
-    sipValue *= 1 + annualInterestRateDecimal;
-    monthlyInvestment += (monthlyInvestment * stepUpPercentage) / 100;
+const shouldContributeThisMonth = (
+  activity: FinancialActivity,
+  currentYear: number,
+  currentMonth: number
+): boolean => {
+  const { frequency, startDate, endDate } = activity;
+
+  if (
+    new Date(currentYear, currentMonth) < startDate ||
+    (endDate && new Date(currentYear, currentMonth) > endDate)
+  ) {
+    return false;
   }
 
-  return sipValue;
+  switch (frequency) {
+    case Frequency.Monthly:
+      return true;
+    case Frequency.Quarterly:
+      return currentMonth % 3 === 0;
+    case Frequency.Halfyearly:
+      return currentMonth % 6 === 0;
+    case Frequency.Yearly:
+      return currentMonth === 0;
+    case Frequency.OneTime:
+      return (
+        currentYear === startDate.getFullYear() &&
+        currentMonth === startDate.getMonth()
+      );
+    default:
+      return false;
+  }
 };
 
-export const calculateYearsToExceedValue = (
-  initialInvestment: number,
-  annualGrowthRate: number,
+const calculateDateToExceedValue = (
+  activities: FinancialActivity[],
   initialExpense: number,
   inflationRate: number
-): {
-  years: number;
-  newTargetValue: number;
-  yearlyExpense: number;
-  currentValue: number;
-  chartData: { year: number; value: number }[];
-} => {
-  let years = 0;
-  let currentValue = 0;
-  let yearlyExpense = initialExpense * 12;
-  let newTargetValue = yearlyExpense / 0.04;
-  let chartData = [];
+): Date | null => {
+  let totalValue = 0;
+  let monthlyExpense = initialExpense;
+  let newTargetValue = monthlyExpense / 0.04;
 
-  while (currentValue < newTargetValue) {
-    currentValue = calculateStepUpSIPValue(
-      initialInvestment,
-      annualGrowthRate,
-      years
-    );
-    yearlyExpense *= 1 + inflationRate / 100;
-    newTargetValue = yearlyExpense / 0.04;
-    years++;
-    chartData.push({
-      year: years + new Date().getFullYear() - 1,
-      value: Math.round(currentValue),
-    });
+  const earliestStartDate = activities.reduce(
+    (prevDate, activity) =>
+      activity.startDate < prevDate ? activity.startDate : prevDate,
+    new Date()
+  );
+  let currentYear = earliestStartDate.getFullYear();
+  let currentMonth = earliestStartDate.getMonth();
 
-    if (years > 100) {
-      // To prevent infinite loops, set a maximum limit (adjust as needed).
-      return {
-        years: -1,
-        newTargetValue: -1,
-        yearlyExpense: -1,
-        currentValue: -1,
-        chartData: [],
-      };
+  while (totalValue < newTargetValue) {
+    for (const activity of activities) {
+      if (shouldContributeThisMonth(activity, currentYear, currentMonth)) {
+        const multiplier =
+          activity.type === FinancialActivityType.Expense ? -1 : 1;
+        const contribution = activity.amount * multiplier;
+        const adjustedContribution =
+          contribution +
+          (contribution * (activity.stepUpPercentage || 0)) / 100;
+
+        // Compound individual contribution by its own interest rate
+        totalValue += adjustedContribution * (1 + activity.interestRate / 1200);
+      }
+    }
+
+    monthlyExpense *= 1 + inflationRate / 1200;
+    newTargetValue = monthlyExpense / 0.04;
+
+    currentMonth++;
+    if (currentMonth > 11) {
+      currentYear++;
+      currentMonth = 0;
+    }
+
+    if (
+      new Date(currentYear, currentMonth).getTime() >
+      new Date().setFullYear(new Date().getFullYear() + 100)
+    ) {
+      // Stop after 100 years to avoid infinite loop
+      return null;
     }
   }
 
-  return {
-    years,
-    newTargetValue: Math.round(newTargetValue),
-    yearlyExpense: Math.round(yearlyExpense / 12),
-    currentValue: Math.round(currentValue),
-    chartData,
-  };
+  return new Date(currentYear, currentMonth);
 };
+
+export default calculateDateToExceedValue;
