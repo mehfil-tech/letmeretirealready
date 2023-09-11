@@ -1,34 +1,37 @@
 "use client";
 
+import { createContext, useContext, useState } from "react";
 import {
-  Dispatch,
-  SetStateAction,
-  createContext,
-  useContext,
-  useState,
-} from "react";
+  FinancialActivity,
+  PlaceholderFinancialActivity,
+} from "@models/FinancialActivity";
 
-export const UserContext = createContext({
-  savings: [{ saving: 0, interestRate: 0 }],
-  setSavings: (_: any) => {},
-  expenses: 0,
-  setExpenses: (_: any) => {},
+type ContextType = {
+  financialActivities: FinancialActivity[];
+  setFinancialActivities: (financialActivities: FinancialActivity[]) => void;
+  inflation: number;
+  setInflation: (inflation: number) => void;
+};
+
+export const UserContext = createContext<ContextType>({
+  financialActivities: [],
+  setFinancialActivities: (_: any) => {},
   inflation: 0,
   setInflation: (_: any) => {},
 });
 
 function UserStore({ children }: { children: React.ReactNode }) {
-  const [savings, setSavings] = useState([{ saving: 30000, interestRate: 12 }]);
-  const [expenses, setExpenses] = useState(30000);
+  // The first element is always going to be the placeholder saving
+  const [financialActivities, setFinancialActivities] = useState<
+    FinancialActivity[]
+  >([PlaceholderFinancialActivity]);
   const [inflation, setInflation] = useState(3);
 
   return (
     <UserContext.Provider
       value={{
-        savings,
-        setSavings,
-        expenses,
-        setExpenses,
+        financialActivities,
+        setFinancialActivities,
         inflation,
         setInflation,
       }}
@@ -38,7 +41,7 @@ function UserStore({ children }: { children: React.ReactNode }) {
   );
 }
 
-export function useUseStore() {
+export function useUserStore() {
   return useContext(UserContext);
 }
 

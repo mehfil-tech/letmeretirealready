@@ -1,15 +1,14 @@
-import Expenses from "@components/Expenses";
-import UserInfo from "@components/Info";
-import Savings from "@components/Savings";
+"use client";
+import AddSaving from "@components/AddSaving";
+import UserInfo from "@components/UserInfo";
+import Savings from "@components/UserFinancialActivities";
 
 function Home() {
   return (
     <section className="w-full flex-col">
-      <div className="flex-wrap gap-x-4 p-4">
-        <Savings />
-        <Expenses />
-      </div>
       <UserInfo />
+      <AddSaving />
+      <Savings />
     </section>
   );
 }
