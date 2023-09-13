@@ -17,9 +17,15 @@ function Nav() {
   };
   console.log(user);
   return (
-    <nav className="p-4 flex justify-between">
-      <Link href="/">
-        <p className="text-2xl font-mono">let me retire already</p>
+    <nav className="p-4 flex justify-between items-center">
+      <Link href="/" className="p-1.5 border-[1.5px] rounded-md">
+        <p className="text-xs font-mono">
+          let me
+          <br />
+          retire
+          <br />
+          already
+        </p>
       </Link>
       {/* Add a button for google login */}
 
