@@ -1,5 +1,4 @@
 "use client";
-import IsAuth from "@components/IsAuth";
 import { logout } from "@lib/firebase";
 import useAuth from "@lib/useAuth";
 import { useRouter } from "next/navigation";
@@ -24,4 +23,4 @@ function User() {
   );
 }
 
-export default IsAuth(User);
+export default User;
