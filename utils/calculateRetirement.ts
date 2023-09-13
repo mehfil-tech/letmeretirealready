@@ -62,7 +62,10 @@ export const calculateDateToExceedValue = (
   let currentYear = earliestStartDate.getFullYear();
   let currentMonth = earliestStartDate.getMonth();
 
-  while (totalValue < newTargetValue) {
+  while (
+    currentYear === earliestStartDate.getFullYear() ||
+    totalValue < newTargetValue
+  ) {
     for (const activity of activities) {
       if (shouldContributeThisMonth(activity, currentYear, currentMonth)) {
         const multiplier =
@@ -98,7 +101,11 @@ export const calculateDateToExceedValue = (
       new Date().setFullYear(new Date().getFullYear() + 100)
     ) {
       // Stop after 100 years to avoid infinite loop
-      return { date: null, value: -1, monthlyExpenses: -1 };
+      return {
+        date: new Date(),
+        value: -1,
+        monthlyExpenses: calculateInitialExpense(activities),
+      };
     }
   }
 

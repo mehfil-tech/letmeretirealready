@@ -15,14 +15,17 @@ function UserInfo() {
     <section className="flex-row p-4">
       <div className="mb-4">
         You will retire in
-        {monthlyExpenses > 0 || value > 0 ? (
-          <div className="text-4xl">{date?.getDate()}</div>
+        {monthlyExpenses > 0 && value > 0 ? (
+          <div className="text-4xl">{date?.toLocaleDateString()}</div>
         ) : (
-          <div className="text-4xl opacity-30">No financial activity</div>
+          <div className="text-4xl opacity-30">
+            {value > 0 ? "Add expenses" : "Add savings"}
+          </div>
         )}
       </div>
       <div className="mb-4">
-        Expenses in {date?.getFullYear()}
+        Monthly expenses
+        {monthlyExpenses > 0 ? ` by ${date?.toLocaleDateString()}` : ""}
         {monthlyExpenses > 0 ? (
           <div className="text-4xl">
             {new Intl.NumberFormat("en-IN").format(monthlyExpenses)}
@@ -32,7 +35,8 @@ function UserInfo() {
         )}
       </div>
       <div className="mb-4">
-        Total savings in {date?.getFullYear()}
+        Total savings
+        {value > 0 ? ` by ${date?.toLocaleDateString()}` : ""}
         {value > 0 ? (
           <div className="text-4xl">
             {new Intl.NumberFormat("en-IN").format(value)}

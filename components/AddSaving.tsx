@@ -80,7 +80,7 @@ function AddFinancialActivity() {
           financialActivities.length > 0
             ? setFinancialActivities([
                 { ...PlaceholderFinancialActivity, id: -Math.random() },
-                financialActivities[0],
+                { ...financialActivities[0], id: Math.random() },
                 ...financialActivities.slice(1),
               ])
             : setFinancialActivities([PlaceholderFinancialActivity]);
