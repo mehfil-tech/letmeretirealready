@@ -17,9 +17,20 @@ export const ThemeSwitcher = () => {
 
   return (
     <button
-      className={`p-2 rounded-full hover:scale-125 active:scale-100 duration-200 bg-slate-300 dark:bg-slate-700`}
+      className={`p-2 mb-4 flex rounded-full duration-200 bg-slate-300 dark:bg-slate-700`}
       onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
     >
+      <div className="pr-2">
+        {theme === "light" ? (
+          <div className="text-sm self-center text-black transition-opacity">
+            Light
+          </div>
+        ) : (
+          <div className="text-sm self-center text-white transition-opacity">
+            Dark
+          </div>
+        )}
+      </div>
       {theme === "light" ? <IoSunnyOutline /> : <IoMoon />}
     </button>
   );
