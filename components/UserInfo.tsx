@@ -14,20 +14,36 @@ function UserInfo() {
   return (
     <section className="flex-row p-4">
       <div className="mb-4">
-        You will retire in {date?.toLocaleDateString()}
-        <div className="text-4xl">{}</div>
+        You will retire in
+        {monthlyExpenses > 0 && value > 0 ? (
+          <div className="text-4xl">{date?.toLocaleDateString()}</div>
+        ) : (
+          <div className="text-4xl opacity-30">
+            {value > 0 ? "Add expenses" : "Add savings"}
+          </div>
+        )}
       </div>
       <div className="mb-4">
-        Expenses in {date?.getFullYear()}
-        <div className="text-4xl">
-          {new Intl.NumberFormat("en-IN").format(monthlyExpenses)}
-        </div>
+        Monthly expenses
+        {monthlyExpenses > 0 ? ` by ${date?.toLocaleDateString()}` : ""}
+        {monthlyExpenses > 0 ? (
+          <div className="text-4xl">
+            {new Intl.NumberFormat("en-IN").format(monthlyExpenses)}
+          </div>
+        ) : (
+          <div className="text-4xl opacity-30">No expenses</div>
+        )}
       </div>
       <div className="mb-4">
-        Total savings in {date?.getFullYear()}
-        <div className="text-4xl">
-          {new Intl.NumberFormat("en-IN").format(value)}
-        </div>
+        Total savings
+        {value > 0 ? ` by ${date?.toLocaleDateString()}` : ""}
+        {value > 0 ? (
+          <div className="text-4xl">
+            {new Intl.NumberFormat("en-IN").format(value)}
+          </div>
+        ) : (
+          <div className="text-4xl opacity-30">No savings</div>
+        )}
       </div>
     </section>
   );

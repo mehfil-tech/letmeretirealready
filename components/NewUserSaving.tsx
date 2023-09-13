@@ -11,7 +11,11 @@ import "react-datepicker/dist/react-datepicker.css";
 export const BOX_STYLE =
   "w-full h-10 rounded-md pl-3 pr-2 bg-white dark:bg-zinc-700";
 
-function NewUserFinancialActivity() {
+function NewUserFinancialActivity({
+  deleteEnabled = false,
+}: {
+  deleteEnabled?: boolean;
+}) {
   const { financialActivities: fa } = useUserStore();
   const financialActivity = fa[0];
   const { financialActivities, setFinancialActivities } = useUserStore();
@@ -147,9 +151,11 @@ function NewUserFinancialActivity() {
           }
         />
       </div>
-      <div className="flex">
-        <RemoveFinancialActivity financialActivity={financialActivity} />
-      </div>
+      {deleteEnabled ? (
+        <div className="flex">
+          <RemoveFinancialActivity financialActivity={financialActivity} />
+        </div>
+      ) : null}
     </div>
   );
 }

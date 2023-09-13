@@ -1,7 +1,7 @@
 import { PlaceholderFinancialActivity } from "@models/FinancialActivity";
 import { useUserStore } from "@store/User";
 import { useEffect, useState } from "react";
-import { IoAdd, IoCheckmark } from "react-icons/io5";
+import { IoAdd, IoCheckmark, IoClose } from "react-icons/io5";
 import NewUserFinancialActivity from "./NewUserSaving";
 import { set } from "mongoose";
 
@@ -46,6 +46,20 @@ function AddFinancialActivity() {
   return (
     <div className="flex flex-col">
       {newActivityVisible ? <NewUserFinancialActivity /> : null}
+      {/* Cancel button */}
+      {newActivityVisible ? (
+        <button
+          onClick={() => {
+            setNewActivityVisible(false);
+          }}
+          className="flex gap-3 rounded-full border-2  p-2 pr-4 ml-4 mr-4 mb-4 justify-center"
+        >
+          <div className={` text-2xl`}>
+            <IoClose />
+          </div>
+          <div>Cancel</div>
+        </button>
+      ) : null}
       <button
         onClick={() => {
           // Validate financialActivities[0]
@@ -66,16 +80,16 @@ function AddFinancialActivity() {
           financialActivities.length > 0
             ? setFinancialActivities([
                 { ...PlaceholderFinancialActivity, id: -Math.random() },
-                financialActivities[0],
+                { ...financialActivities[0], id: Math.random() },
                 ...financialActivities.slice(1),
               ])
             : setFinancialActivities([PlaceholderFinancialActivity]);
           console.log("added ", JSON.stringify(financialActivities[0]));
           setNewActivityVisible(false);
         }}
-        className="flex gap-3 rounded-full bg-slate-300 dark:bg-slate-700 p-2 pr-4 ml-4 mr-4 mb-4 justify-center"
+        className="flex gap-3 rounded-full bg-green-300 dark:bg-green-600 p-2 pr-4 ml-4 mr-4 mb-4 justify-center"
       >
-        <div className={` text-2xl`}>
+        <div className={`text-2xl`}>
           {newActivityVisible ? <IoCheckmark /> : <IoAdd />}
         </div>
         <div>Add Financial Activity</div>

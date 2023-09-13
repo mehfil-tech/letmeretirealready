@@ -1,4 +1,5 @@
 "use client";
+import { ThemeSwitcher } from "@components/ThemeSwitcher";
 import { logout } from "@lib/firebase";
 import useAuth from "@lib/useAuth";
 import { useRouter } from "next/navigation";
@@ -9,7 +10,11 @@ function User() {
   const router = useRouter();
   return (
     <div className="p-4">
-      <h1 className="pb-2"> {user?.displayName} </h1>
+      <h1 className="pb-2 text-xl"> {user?.displayName} </h1>
+      <p className="pb-2"> {user?.email} </p>
+      <div>
+        <ThemeSwitcher />
+      </div>
       <button
         className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
         onClick={async () => {
