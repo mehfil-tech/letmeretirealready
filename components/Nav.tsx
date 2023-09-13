@@ -6,14 +6,36 @@ import { useState, useEffect } from "react";
 import { signIn, signOut, useSession, getProviders } from "next-auth/react";
 import { ThemeSwitcher } from "./ThemeSwitcher";
 import { IoMenu, IoClose } from "react-icons/io5";
+import { signInWithPopup, auth, GoogleAuthProvider } from "../lib/firebase";
+import useAuth from "@lib/useAuth";
 
 function Nav() {
   const isUserLoggedIn = true;
+  const { user, loading } = useAuth();
+  const signInWithGoogle = () => {
+    signInWithPopup(auth, new GoogleAuthProvider());
+  };
+  console.log(user);
   return (
     <nav className="p-4 flex justify-between">
       <Link href="/">
         <p className="text-2xl font-mono">let me retire already</p>
       </Link>
+      {/* Add a button for google login */}
+
+      {loading ? (
+        <div />
+      ) : user ? (
+        <Link href="/user">
+          <img
+            className="rounded-full h-10 w-10"
+            src={user.photoURL ?? undefined}
+            alt={user.displayName || "User's profile"}
+          />
+        </Link>
+      ) : (
+        <button onClick={signInWithGoogle}>Sign in with Google</button>
+      )}
       {/* <div className="flex gap-4 items-center">
         <Link href="/home">
           <p>Home</p>
