@@ -23,5 +23,4 @@ function IsAuth<T>(Component: React.ComponentType<T>) {
     );
   };
 }
-IsAuth.displayName = "MyComponent";
 export default IsAuth;
