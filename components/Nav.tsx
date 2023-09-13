@@ -10,12 +10,10 @@ import { signInWithPopup, auth, GoogleAuthProvider } from "../lib/firebase";
 import useAuth from "@lib/useAuth";
 
 function Nav() {
-  const isUserLoggedIn = true;
   const { user, loading } = useAuth();
   const signInWithGoogle = () => {
     signInWithPopup(auth, new GoogleAuthProvider());
   };
-  console.log(user);
   return (
     <nav className="p-4 flex justify-between items-center">
       <Link href="/" className="p-1.5 border-[1.5px] rounded-md">

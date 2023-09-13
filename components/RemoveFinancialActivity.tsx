@@ -9,7 +9,7 @@ function RemoveFinancialActivity({
 }: {
   financialActivity: FinancialActivity;
 }) {
-  const { financialActivities, setFinancialActivities } = useUserStore();
+  const { deleteFinancialActivity } = useUserStore();
   const [isModalOpen, setIsModalOpen] = useState(false);
   return (
     <div>
@@ -17,12 +17,11 @@ function RemoveFinancialActivity({
         isOpen={isModalOpen}
         onConfirm={() => {
           console.log(financialActivity?.id);
-          if (financialActivity.id > 0) {
-            setFinancialActivities(
-              financialActivities.filter((f) => f.id !== financialActivity.id)
-            );
+          if (financialActivity?.id) {
+            deleteFinancialActivity(financialActivity);
             console.log("removed ", JSON.stringify(financialActivity));
           }
+          setIsModalOpen(false);
         }}
         onClose={() => setIsModalOpen(false)}
       />

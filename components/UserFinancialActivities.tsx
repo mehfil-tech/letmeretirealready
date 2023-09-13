@@ -5,10 +5,10 @@ import UserFinancialActivity from "./UserFinancialActivity";
 
 function UserFinancialActivities() {
   const { financialActivities } = useUserStore();
-
+  console.log(financialActivities[0]);
   return (
     <section className="flex flex-col m-4 gap-4 justify-center">
-      {financialActivities.slice(1).map((activity, index) => {
+      {financialActivities.map((activity, index) => {
         return <UserFinancialActivity key={activity.id} activity={activity} />;
       })}
     </section>
