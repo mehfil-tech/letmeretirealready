@@ -8,7 +8,7 @@ import { calculateDateToExceedValue } from "@utils/calculateRetirement";
 function UserInfo() {
   const { financialActivities, inflation } = useUserStore();
   const { date, value, monthlyExpenses } = calculateDateToExceedValue(
-    financialActivities.slice(1),
+    financialActivities,
     inflation
   );
   return (

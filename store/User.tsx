@@ -48,7 +48,12 @@ function UserStore({ children }: { children: React.ReactNode }) {
       (snapshot) => {
         const financialActivities: FinancialActivity[] = [];
         snapshot.forEach((doc) => {
-          const data = { ...doc.data(), id: doc.id } as FinancialActivity;
+          const data = {
+            ...doc.data(),
+            id: doc.id,
+            startDate: doc.data().startDate.toDate(),
+            endDate: doc.data().endDate.toDate(),
+          } as FinancialActivity;
           financialActivities.push(data);
         });
         setFinancialActivities(financialActivities);
@@ -60,7 +65,7 @@ function UserStore({ children }: { children: React.ReactNode }) {
 
   const addFinancialActivity = async (financialActivity: FinancialActivity) => {
     const docRef = collection(db, "financial activities");
-    await addDoc(docRef, { ...financialActivity, userId: "abc" });
+    await addDoc(docRef, { ...financialActivity, userId: user?.uid });
   };
 
   const deleteFinancialActivity = async (

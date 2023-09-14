@@ -1,22 +1,40 @@
-import { useState, useEffect } from 'react';
-import { User, getAuth, onAuthStateChanged } from 'firebase/auth';
+import { useState, useEffect } from "react";
+import {
+  User,
+  getAuth,
+  onAuthStateChanged,
+  signInAnonymously,
+} from "firebase/auth";
 
-function useAuth(): { user: User | null, loading: boolean } {
+function useAuth(): { user: User | null; loading: boolean } {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  console.log(user);
 
   useEffect(() => {
     const auth = getAuth();
-    const unsubscribe = onAuthStateChanged(auth, (currentUser: User | null) => {
-      setUser(currentUser);
-      setLoading(false);
-    });
+    const unsubscribe = onAuthStateChanged(
+      auth,
+      async (currentUser: User | null) => {
+        if (!currentUser) {
+          try {
+            // Sign in the user anonymously
+            const userCredential = await signInAnonymously(auth);
+            setUser(userCredential.user);
+          } catch (error) {
+            console.error("Error signing in anonymously:", error);
+          }
+        } else {
+          setUser(currentUser);
+        }
+        setLoading(false);
+      }
+    );
 
-    // Cleanup the listener on component unmount
     return () => unsubscribe();
   }, []);
 
   return { user, loading };
-};
+}
 
 export default useAuth;
