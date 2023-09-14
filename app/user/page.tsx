@@ -10,8 +10,14 @@ function User() {
   const router = useRouter();
   return (
     <div className="p-4">
-      <h1 className="pb-2 text-xl"> {user?.displayName} </h1>
-      <p className="pb-2"> {user?.email} </p>
+      <h1 className="pb-2 text-xl">
+        {" "}
+        {user?.isAnonymous ? "Anonymous User" : user?.displayName}
+      </h1>
+      <p className="pb-2">
+        {" "}
+        {user?.isAnonymous ? "Sign in to save your data" : user?.email}{" "}
+      </p>
       <div>
         <ThemeSwitcher />
       </div>

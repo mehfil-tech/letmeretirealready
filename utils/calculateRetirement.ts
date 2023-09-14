@@ -49,6 +49,8 @@ export const calculateDateToExceedValue = (
   activities: FinancialActivity[],
   inflationRate: number
 ): { date: Date | null; value: number; monthlyExpenses: number } => {
+  if (activities?.length === 0)
+    return { date: null, value: 0, monthlyExpenses: 0 };
   let totalValue = 0;
   let monthlyExpense = calculateInitialExpense(activities);
   let newTargetValue = monthlyExpense / 0.04;
@@ -56,7 +58,7 @@ export const calculateDateToExceedValue = (
 
   const earliestStartDate = activities.reduce(
     (prevDate, activity) =>
-      activity.startDate < prevDate ? activity.startDate : prevDate,
+      activity?.startDate < prevDate ? activity?.startDate : prevDate,
     new Date()
   );
   let currentYear = earliestStartDate.getFullYear();

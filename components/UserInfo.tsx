@@ -8,11 +8,11 @@ import { calculateDateToExceedValue } from "@utils/calculateRetirement";
 function UserInfo() {
   const { financialActivities, inflation } = useUserStore();
   const { date, value, monthlyExpenses } = calculateDateToExceedValue(
-    financialActivities.slice(1),
+    financialActivities,
     inflation
   );
   return (
-    <section className="flex-row p-4">
+    <section className="flex-row p-4 pt-2">
       <div className="mb-4">
         You will retire in
         {monthlyExpenses > 0 && value > 0 ? (
