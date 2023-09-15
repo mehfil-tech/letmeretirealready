@@ -57,7 +57,7 @@ function AddFinancialActivity() {
     <div
       className={`flex flex-col ${
         newActivityVisible ? "bg-neutral-100 dark:bg-gray-900" : ""
-      } m-4 rounded-lg`}
+      } m-4 rounded-md`}
     >
       {newActivityVisible ? (
         <div className="flex flex-col m-4  rounded-lg transition-opacity duration-500 opacity-100">
@@ -192,7 +192,7 @@ function AddFinancialActivity() {
           onClick={() => {
             setNewActivityVisible(false);
           }}
-          className="flex gap-1 rounded-full border-2  p-2 pr-4 ml-4 mr-4  justify-center"
+          className="flex gap-1 rounded-md border-2  p-2 pr-4 ml-4 mr-4  justify-center"
         >
           <div className={` text-2xl`}>
             <IoClose />
@@ -219,7 +219,9 @@ function AddFinancialActivity() {
           addFinancialActivity(financialActivity);
           setNewActivityVisible(false);
         }}
-        className="flex gap-1 rounded-full bg-green-300 dark:bg-green-600 p-2 pr-4 m-4 justify-center"
+        className={`flex gap-1 rounded-md bg-green-300 dark:bg-green-600 p-2 pr-4 ${
+          newActivityVisible ? "m-4" : ""
+        } justify-center`}
       >
         <div className={`text-2xl`}>
           {newActivityVisible ? <IoCheckmark /> : <IoAdd />}
