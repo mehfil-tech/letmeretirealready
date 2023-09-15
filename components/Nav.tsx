@@ -15,9 +15,12 @@ function Nav() {
     signInWithPopup(auth, new GoogleAuthProvider());
   };
   return (
-    <nav className="p-4 flex justify-between items-center">
-      <Link href="/" className="p-1.5 border-[1.5px] rounded-md">
-        <p className="text-xs font-mono">
+    <nav className="p-4 flex justify-between items-center sticky top-0 w-full bg-white dark:bg-gray-800">
+      <Link
+        href="/"
+        className="p-.5 h-12 w-12 border-[1px] border-black dark:border-white flex justify-center items-center"
+      >
+        <p className="text-[9px] leading-snug font-bold">
           let me
           <br />
           retire
@@ -32,7 +35,7 @@ function Nav() {
       ) : !user?.isAnonymous ? (
         <Link className="flex items-center gap-1" href="/user">
           <img
-            className="rounded-full h-10 w-10"
+            className="rounded-full h-12 w-12"
             src={user?.photoURL ?? undefined}
             alt={user?.displayName || "User's profile"}
           />
@@ -40,25 +43,13 @@ function Nav() {
       ) : (
         <button
           onClick={signInWithGoogle}
-          className="flex flex-col items-center"
+          className="flex h-12 w-12 flex-col items-center"
         >
           <button className="text-xl bg-black p-2 rounded-full ">
             <IoPerson />
           </button>
         </button>
       )}
-
-      {/* <div className="flex gap-4 items-center">
-        <Link href="/home">
-          <p>Home</p>
-        </Link>
-        <Link href="/savings">
-          <p>Savings</p>
-        </Link>
-        <Link href="/expenses">
-          <p>Expenses</p>
-        </Link>
-      </div> */}
     </nav>
   );
 }
