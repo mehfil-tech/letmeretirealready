@@ -2,6 +2,7 @@
 
 "use client";
 
+import useAuth from "@lib/useAuth";
 import { useUserStore } from "@store/User";
 import { calculateDateToExceedValue } from "@utils/calculateRetirement";
 
