@@ -5,7 +5,7 @@ function UserFinancialActivity({ activity }: { activity: FinancialActivity }) {
   return (
     <div className="flex flex-col bg-gray-100 dark:bg-gray-900 p-4 rounded-lg">
       <div className="flex flex-row justify-between items-center">
-        <div className="pl-2 pr-2 pt-1 pb-1 bg-green-300 dark:bg-green-600 rounded-md w-fit mb-2">
+        <div className="pl-2 pr-2 pt-1 pb-1 bg-blue-400 rounded-md w-fit mb-2">
           {activity.type ?? ""}
         </div>
         <RemoveFinancialActivity financialActivity={activity} />

@@ -22,7 +22,7 @@ export default function RootLayout({
             <main className="app justify-center">
               <Nav />
               <div className="w-full flex justify-center">
-                <div className="">{children}</div>
+                <div className="w-full">{children}</div>
               </div>
             </main>
           </ThemeProvider>

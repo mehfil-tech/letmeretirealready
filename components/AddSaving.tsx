@@ -55,7 +55,7 @@ function AddFinancialActivity() {
 
   return (
     <div
-      className={`flex flex-col ${
+      className={`flex sm:sticky top-0 flex-col ${
         newActivityVisible ? "bg-neutral-100 dark:bg-gray-900" : ""
       } m-4 rounded-md`}
     >
@@ -219,14 +219,14 @@ function AddFinancialActivity() {
           addFinancialActivity(financialActivity);
           setNewActivityVisible(false);
         }}
-        className={`flex gap-1 rounded-md bg-green-300 dark:bg-green-600 p-2 pr-4 ${
+        className={`flex gap-1 rounded-md bg-blue-400 p-2 pr-4 ${
           newActivityVisible ? "m-4" : ""
         } justify-center`}
       >
-        <div className={`text-2xl`}>
+        <div className={`text-2xl text-black`}>
           {newActivityVisible ? <IoCheckmark /> : <IoAdd />}
         </div>
-        <div>Add Financial Activity</div>
+        <div className="text-black">Add Financial Activity</div>
       </button>
     </div>
   );
