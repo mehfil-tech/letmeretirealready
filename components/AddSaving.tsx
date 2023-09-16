@@ -55,12 +55,12 @@ function AddFinancialActivity() {
 
   return (
     <div
-      className={`flex flex-col ${
+      className={`flex sm:sticky top-0 flex-col ${
         newActivityVisible ? "bg-neutral-100 dark:bg-gray-900" : ""
-      } m-4 rounded-lg`}
+      } m-4 rounded-md`}
     >
       {newActivityVisible ? (
-        <div className="flex flex-col m-4  rounded-lg transition-opacity duration-500 opacity-100">
+        <div className="flex flex-col m-6  rounded-lg transition-opacity duration-500 opacity-100">
           <div className="flex gap-3 w-full">
             <div className="w-full">
               <div className="text-xs mb-0.5">Name</div>
@@ -192,7 +192,7 @@ function AddFinancialActivity() {
           onClick={() => {
             setNewActivityVisible(false);
           }}
-          className="flex gap-1 rounded-full border-2  p-2 pr-4 ml-4 mr-4  justify-center"
+          className="flex gap-1 rounded-md border-2  p-2 pr-4 ml-6 mr-6  justify-center"
         >
           <div className={` text-2xl`}>
             <IoClose />
@@ -219,12 +219,14 @@ function AddFinancialActivity() {
           addFinancialActivity(financialActivity);
           setNewActivityVisible(false);
         }}
-        className="flex gap-1 rounded-full bg-green-300 dark:bg-green-600 p-2 pr-4 m-4 justify-center"
+        className={`flex gap-1 rounded-md bg-blue-400 p-2 pr-4 ${
+          newActivityVisible ? "m-6" : ""
+        } justify-center`}
       >
-        <div className={`text-2xl`}>
+        <div className={`text-2xl text-white font-bold`}>
           {newActivityVisible ? <IoCheckmark /> : <IoAdd />}
         </div>
-        <div>Add Financial Activity</div>
+        <div className="text-white font-bold">Add Financial Activity</div>
       </button>
     </div>
   );

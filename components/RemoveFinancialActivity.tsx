@@ -19,14 +19,13 @@ function RemoveFinancialActivity({
           console.log(financialActivity?.id);
           if (financialActivity?.id) {
             deleteFinancialActivity(financialActivity);
-            console.log("removed ", JSON.stringify(financialActivity));
           }
           setIsModalOpen(false);
         }}
         onClose={() => setIsModalOpen(false)}
       />
       <button
-        className={` p-2 mb-2  rounded-md text-xl text-red-500`}
+        className={` pl-2 py-2 mb-2  rounded-md text-xl text-red-500`}
         onClick={() => {
           setIsModalOpen(true);
         }}

@@ -1,64 +1,177 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
-import { useState, useEffect } from "react";
-import { signIn, signOut, useSession, getProviders } from "next-auth/react";
-import { ThemeSwitcher } from "./ThemeSwitcher";
-import { IoPerson } from "react-icons/io5";
+import {
+  IoBarChart,
+  IoCash,
+  IoClose,
+  IoCloudDownload,
+  IoCloudUpload,
+  IoHelp,
+  IoHome,
+  IoInformation,
+  IoMenu,
+  IoOptions,
+  IoPerson,
+  IoSettings,
+} from "react-icons/io5";
 import { signInWithPopup, auth, GoogleAuthProvider } from "../lib/firebase";
 import useAuth from "@lib/useAuth";
+import { usePathname } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
+
+function NavLink({
+  href,
+  currentPath,
+  children,
+  onClick,
+}: {
+  href: string;
+  currentPath: string;
+  children: React.ReactNode;
+  onClick?: () => void;
+}) {
+  const isActive = href === currentPath;
+  return (
+    <Link
+      href={href}
+      onClick={onClick}
+      className={`flex gap-3 items-center p-6 ${
+        isActive ? "text-white font-bold bg-gray-900" : "text-gray-300"
+      }`}
+    >
+      {children}
+    </Link>
+  );
+}
 
 function Nav() {
   const { user, loading } = useAuth();
+  const pathname = usePathname();
+  const [menuVisible, setMenuVisible] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [menuVisible]);
+  console.log("User display name: ", user?.displayName);
+  const handleClickOutside = (event: any) => {
+    if (
+      menuRef.current &&
+      !menuRef.current.contains(event.target) &&
+      menuVisible
+    ) {
+      setMenuVisible(false);
+    }
+  };
   const signInWithGoogle = () => {
     signInWithPopup(auth, new GoogleAuthProvider());
   };
   return (
-    <nav className="p-4 flex justify-between items-center">
-      <Link href="/" className="p-1.5 border-[1.5px] rounded-md">
-        <p className="text-xs font-mono">
-          let me
-          <br />
-          retire
-          <br />
-          already
+    <nav className="p-6 flex justify-between items-center sticky top-0 w-full bg-white dark:bg-gray-800 z-50">
+      <Link
+        href={user && !user.isAnonymous ? "/user" : "/"}
+        className={`${
+          pathname === "/" ? "sm:ml-[90px]" : ""
+        } py-2 px-4 border-[0.5px] border-black dark:border-white flex justify-center items-center`}
+      >
+        <p className="text-sm leading-snug font-semibold">
+          {user?.displayName ?? "let me retire already"}
         </p>
       </Link>
-      {/* Add a button for google login */}
-
-      {loading ? (
-        <div />
-      ) : !user?.isAnonymous ? (
-        <Link className="flex items-center gap-1" href="/user">
-          <img
-            className="rounded-full h-10 w-10"
-            src={user?.photoURL ?? undefined}
-            alt={user?.displayName || "User's profile"}
-          />
-        </Link>
-      ) : (
-        <button
-          onClick={signInWithGoogle}
-          className="flex flex-col items-center"
+      {/* Desktop menu */}
+      <div
+        className={
+          pathname === "/" ? "hidden" : "items-center gap-4 hidden sm:block"
+        }
+      >
+        <div className="gap-4 flex items-center">
+          <NavLink href="/home" currentPath={pathname}>
+            Home
+          </NavLink>
+          <NavLink href="/savings" currentPath={pathname}>
+            Savings
+          </NavLink>
+          <NavLink href="/expenses" currentPath={pathname}>
+            Expenses
+          </NavLink>
+        </div>
+      </div>
+      {/* Mobile Menu */}
+      <div className="block sm:hidden z-50">
+        <div
+          ref={menuRef}
+          className={`bg-gray-800 opacity-100 flex flex-col pt-6 drop-shadow-2xl fixed top-0 right-0 h-full w-64 z-[1000000] transform ${
+            menuVisible ? "translate-x-0" : "translate-x-full"
+          } transition-transform duration-300`}
         >
-          <button className="text-xl bg-black p-2 rounded-full ">
-            <IoPerson />
+          <button
+            onClick={() => setMenuVisible(!menuVisible)}
+            className="px-4 py-2 flex items-center gap-2 border-[0.5px] border-l-0 border-red-400 mb-8 mr-6"
+          >
+            <IoClose className="text-lg text-red-400" />
+            <div className="text-sm font-semibold leading-snug text-red-400">
+              Close
+            </div>
           </button>
+          <NavLink
+            href="/home"
+            currentPath={pathname}
+            onClick={() => setMenuVisible(!menuVisible)}
+          >
+            <IoHome />
+            Home
+          </NavLink>
+          <NavLink
+            href="/savings"
+            currentPath={pathname}
+            onClick={() => setMenuVisible(!menuVisible)}
+          >
+            <IoCloudDownload />
+            Savings
+          </NavLink>
+          <NavLink
+            href="/expenses"
+            currentPath={pathname}
+            onClick={() => setMenuVisible(!menuVisible)}
+          >
+            <IoCloudUpload />
+            Expenses
+          </NavLink>
+          <NavLink
+            href="/expenses"
+            currentPath={pathname}
+            onClick={() => setMenuVisible(!menuVisible)}
+          >
+            <IoBarChart />
+            Goals
+          </NavLink>
+          <NavLink
+            href="/expenses"
+            currentPath={pathname}
+            onClick={() => setMenuVisible(!menuVisible)}
+          >
+            <IoInformation />
+            About
+          </NavLink>
+          <NavLink
+            href="/expenses"
+            currentPath={pathname}
+            onClick={() => setMenuVisible(!menuVisible)}
+          >
+            <IoHelp />
+            Help
+          </NavLink>
+        </div>
+        <button
+          onClick={() => setMenuVisible(!menuVisible)}
+          className={pathname === "/" ? "hidden" : ""}
+        >
+          <IoMenu className="text-2xl mt-0.5" />
         </button>
-      )}
-
-      {/* <div className="flex gap-4 items-center">
-        <Link href="/home">
-          <p>Home</p>
-        </Link>
-        <Link href="/savings">
-          <p>Savings</p>
-        </Link>
-        <Link href="/expenses">
-          <p>Expenses</p>
-        </Link>
-      </div> */}
+      </div>
     </nav>
   );
 }
