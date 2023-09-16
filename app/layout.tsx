@@ -2,10 +2,11 @@ import Nav from "@components/Nav";
 import RootStore from "@store";
 import "@styles/globals.css";
 import { ThemeProvider } from "./themeProvider";
+import Head from "next/head";
 
 export const metadata = {
-  title: "LMRA",
-  description: "Get retired",
+  title: "Let me retire already",
+  description: "Retirement planner",
 };
 
 export default function RootLayout({
@@ -15,6 +16,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" href="/favicon.png" />
+      </head>
       <body className="bg-white dark:bg-gray-800">
         <div className="main" />
         <RootStore>

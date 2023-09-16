@@ -3,7 +3,7 @@ import RemoveFinancialActivity from "./RemoveFinancialActivity";
 
 function UserFinancialActivity({ activity }: { activity: FinancialActivity }) {
   return (
-    <div className="flex flex-col bg-gray-100 dark:bg-gray-900 p-4 rounded-lg">
+    <div className="flex flex-col bg-gray-100 dark:bg-gray-900 p-6 rounded-lg">
       <div className="flex flex-row justify-between items-center">
         <div className="pl-2 pr-2 pt-1 pb-1 bg-blue-400 rounded-md w-fit mb-2">
           {activity.type ?? ""}

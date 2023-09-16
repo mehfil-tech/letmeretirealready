@@ -13,8 +13,8 @@ function UserInfo() {
     inflation
   );
   return (
-    <section className="flex-row p-4 pt-2 sm:pt-0">
-      <div className="mb-4">
+    <section className="flex-row p-6 pt-2 sm:pt-0">
+      <div className="mb-4 ">
         You will retire in
         {monthlyExpenses > 0 && value > 0 ? (
           <div className="text-4xl">{date?.toLocaleDateString()}</div>
