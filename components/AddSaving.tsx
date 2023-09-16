@@ -223,10 +223,10 @@ function AddFinancialActivity() {
           newActivityVisible ? "m-4" : ""
         } justify-center`}
       >
-        <div className={`text-2xl text-black`}>
+        <div className={`text-2xl text-white font-bold`}>
           {newActivityVisible ? <IoCheckmark /> : <IoAdd />}
         </div>
-        <div className="text-black">Add Financial Activity</div>
+        <div className="text-white font-bold">Add Financial Activity</div>
       </button>
     </div>
   );

@@ -12,8 +12,8 @@ function UserFinancialActivities() {
       })}
       {financialActivities.length === 0 && (
         <div className="flex flex-col bg-gray-100 dark:bg-gray-900 p-4 rounded-lg">
-          <div className="text-4xl opacity-30">No savings</div>
-          <div className="text-2xl opacity-30">Add a saving to get started</div>
+          <div className="text-2xl opacity-30">No savings</div>
+          <div className="opacity-30">Add a saving to get started</div>
         </div>
       )}
     </section>
