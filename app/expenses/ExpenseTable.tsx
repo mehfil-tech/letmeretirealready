@@ -38,7 +38,7 @@ const ExpenseTable = ({
       <TableHeader>
         {headers.map((header) => (
           <TableHead key={header.id} className="font-medium">
-            {header?.column.columnDef.header}
+            {header?.column.columnDef.header as React.ReactNode}
           </TableHead>
         ))}
       </TableHeader>
@@ -50,11 +50,11 @@ const ExpenseTable = ({
             <TableCell>{row.original.description}</TableCell>
             <TableCell>{row.original.amount}</TableCell>
             <TableCell>
-              {new Date(row.original.date).toLocaleDateString()}
+              {new Date(row.original.date.seconds * 1000).toLocaleDateString()}
             </TableCell>
             <TableCell>
               <button
-                onClick={() => deleteExpense(row.original.id)}
+                onClick={() => deleteExpense(row.original.id as string)}
                 className="flex w-full justify-center"
               >
                 <IoTrash color="red" size={18} />
