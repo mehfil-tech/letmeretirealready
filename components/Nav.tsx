@@ -56,7 +56,6 @@ function Nav() {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [menuVisible]);
-  console.log("User display name: ", user?.displayName);
   const handleClickOutside = (event: any) => {
     if (
       menuRef.current &&
