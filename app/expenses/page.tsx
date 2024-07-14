@@ -1,17 +1,23 @@
 "use client";
-import AddSaving from "@components/AddSaving";
-import UserInfo from "@components/UserInfo";
-import Savings from "@components/UserFinancialActivities";
+import AddExpenseForm from "./AddExpenseForm";
+import { useExpenseStore } from "@store/Expense";
+import { Expense } from "@models/Expense";
+import ExpenseTable from "./ExpenseTable";
 
 function Home() {
+  const { expenses, addExpense, deleteExpense } = useExpenseStore();
+  const onSubmit = (values: Expense) => {
+    console.log(values);
+    addExpense(values);
+  };
   return (
-    <section className="grid sm:grid-cols-2 h-[80vh]">
-      <div className="flex sm:items-center w-3/4 sm:m-auto">
-        <UserInfo />
-      </div>
+    <section className="grid justify-center h-[80vh]">
       <div className="sm:overflow-y-auto">
-        <AddSaving />
-        <Savings />
+        <ExpenseTable
+          expenses={expenses}
+          deleteExpense={deleteExpense}
+          onSubmit={onSubmit}
+        />
       </div>
     </section>
   );

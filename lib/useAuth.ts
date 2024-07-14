@@ -9,7 +9,6 @@ import {
 function useAuth(): { user: User | null; loading: boolean } {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
-  console.log(user);
 
   useEffect(() => {
     const auth = getAuth();
