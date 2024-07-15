@@ -17,13 +17,17 @@ import {
 } from "@components/ui/table";
 import { IoTrash, IoTrashBinOutline } from "react-icons/io5";
 import AddExpenseForm from "./AddExpenseForm";
+import { ExpenseCategory } from "@models/ExpenseCategory";
+import { numberToRupeeFormatter } from "./numberToRupeeFormatter";
 
 const ExpenseTable = ({
   expenses,
+  categories,
   deleteExpense,
   onSubmit,
 }: {
   expenses: Expense[];
+  categories: ExpenseCategory[];
   deleteExpense: (id: string) => void;
   onSubmit: (data: Expense) => void;
 }) => {
@@ -33,8 +37,9 @@ const ExpenseTable = ({
     getCoreRowModel: getCoreRowModel(),
   });
   const headers = table?.getHeaderGroups()[0].headers;
+  console.log(JSON.stringify(expenses[0]?.category));
   return (
-    <Table>
+    <Table className="w-min">
       <TableHeader>
         {headers.map((header) => (
           <TableHead key={header.id} className="font-medium">
@@ -43,12 +48,12 @@ const ExpenseTable = ({
         ))}
       </TableHeader>
       <TableBody>
-        <AddExpenseForm onSubmit={onSubmit} />
-
+        <AddExpenseForm onSubmit={onSubmit} categories={categories} />
         {table?.getRowModel().rows.map((row) => (
           <TableRow key={row.id}>
             <TableCell>{row.original.description}</TableCell>
-            <TableCell>{row.original.amount}</TableCell>
+            <TableCell>{row.original.category?.name ?? "Other"}</TableCell>
+            <TableCell>{numberToRupeeFormatter(row.original.amount)}</TableCell>
             <TableCell>
               {new Date(row.original.date.seconds * 1000).toLocaleDateString()}
             </TableCell>

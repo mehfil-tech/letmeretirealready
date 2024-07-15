@@ -7,6 +7,11 @@ export const ExpenseTableColumns = [
     accessor: "description",
   },
   {
+    header: "Category",
+    accessor: "category",
+  },
+
+  {
     header: "Amount",
     accessor: "amount",
   },

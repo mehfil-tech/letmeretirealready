@@ -1,6 +1,7 @@
 import { CreditCardProvider } from "./CreditCard";
 import { EMIProvider } from "./EMI";
 import { ExpenseProvider } from "./Expense";
+import { ExpenseCategoryContext } from "./ExpenseCategory";
 import { IncomeProvider } from "./Income";
 import { InvestmentProvider } from "./Investment";
 import UserStore from "./User";

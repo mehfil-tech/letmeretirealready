@@ -6,4 +6,5 @@ export interface Expense {
   amount: number;
   description: string;
   date: Timestamp;
+  category: { id: string; name: string };
 }

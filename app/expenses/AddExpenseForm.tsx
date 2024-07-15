@@ -2,48 +2,65 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { Expense } from "@models/Expense";
 import { TableCell, TableRow } from "@components/ui/table";
-import { IoAdd } from "react-icons/io5";
+import { IoAddCircle } from "react-icons/io5";
+import { ExpenseCategory } from "@models/ExpenseCategory";
 
 const AddExpenseForm = ({
   onSubmit,
+  categories,
 }: {
   onSubmit: (data: Expense) => void;
+  categories: ExpenseCategory[];
 }) => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm({
     defaultValues: {
       description: "",
-      amount: undefined,
+      amount: 0,
       date: "",
+      category: "Other",
     },
   });
   const onSubmitHandler = (data: any) => {
-    onSubmit(data);
-
+    reset();
+    onSubmit({ ...data, category: { name: data.category } });
   };
   return (
     <TableRow>
       <TableCell>
         <input
-          className="h-10 w-64 rounded-md"
+          className="h-10 rounded-md bg-transparent border border-gray-600 pl-2 pr-2"
           placeholder={"New Expense"}
           {...register("description", { required: true })}
         />
       </TableCell>
       <TableCell>
+        <select
+          className="h-10 rounded-md bg-transparent border border-gray-600 pl-2 pr-2"
+          {...register("category", { required: true })}
+        >
+          {categories?.map((category) => (
+            <option key={category.id} value={category.name}>
+              {category.name}
+            </option>
+          ))}
+        </select>
+      </TableCell>
+      <TableCell>
         <input
-          className="h-10 w-32 rounded-md"
-          style={{ appearance: "none", alignSelf: "end" }}
+          className="h-10 rounded-md bg-transparent border border-gray-600 pl-2 pr-2"
+          style={{ appearance: "none" }}
           placeholder={"2400"}
           {...register("amount", { required: true, valueAsNumber: true })}
         />
       </TableCell>
       <TableCell>
         <input
-          className="h-10 w-32 rounded-md"
+          className="h-10 rounded-md bg-transparent border border-gray-600 pl-2 pr-2"
           style={{ appearance: "none" }}
           type="date"
           {...register("date", { required: true })}
@@ -53,13 +70,9 @@ const AddExpenseForm = ({
         <button
           className="flex w-full justify-center"
           type="submit"
-          onClick={handleSubmit(onSubmitHandler, (error) =>
-            console.log("error")
-          )}
+          onClick={handleSubmit(onSubmitHandler)}
         >
-          <div className="bg-green-500 rounded-full p-0.5">
-            <IoAdd color="white" />
-          </div>
+          <IoAddCircle className="text-green-500" size={20} />
         </button>
       </TableCell>
     </TableRow>
