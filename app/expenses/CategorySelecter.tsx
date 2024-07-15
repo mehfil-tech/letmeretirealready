@@ -27,15 +27,15 @@ const CategorySelecter: React.FC<CategorySelecterProps> = ({
           <IoCreateOutline size={20} />
         </div>
       </Link>
-      <div className="flex flex-col items-end space-y-2 m-6 h-full">
+      <div className="flex flex-col items-end space-y-3 mr-6 ml-6 mt-4 mb-4 h-full">
         {categories.map((category) => (
           <button
             key={category.id}
             onClick={() => onSelect(category.name)}
-            className="bg-gray-700 p-2 rounded-lg flex flex-col justify-center items-center"
+            className="bg-gray-700 p-2 rounded-lg flex flex-col justify-center items-end"
             style={{width: 100+300*category.total/totalExpense }}
           >
-            <div className="font-medium">{category.name}</div>
+            <div className="font-medium text-sm">{category.name}</div>
             <div className="text-xl font-light">
               {numberToRupeeFormatter(category.total)}
             </div>

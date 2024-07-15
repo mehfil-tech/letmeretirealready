@@ -31,14 +31,14 @@ const AddExpenseForm = ({
   };
   return (
     <TableRow>
-      <TableCell>
+      <TableCell className="pl-3">
         <input
           className="h-10 rounded-md bg-transparent border border-gray-600 pl-2 pr-2"
           placeholder={"New Expense"}
           {...register("description", { required: true })}
         />
       </TableCell>
-      <TableCell>
+      <TableCell className="pl-3">
         <select
           className="h-10 rounded-md bg-transparent border border-gray-600 pl-2 pr-2"
           {...register("category", { required: true })}
@@ -50,7 +50,7 @@ const AddExpenseForm = ({
           ))}
         </select>
       </TableCell>
-      <TableCell>
+      <TableCell className="pl-3">
         <input
           className="h-10 rounded-md bg-transparent border border-gray-600 pl-2 pr-2"
           style={{ appearance: "none" }}
@@ -58,7 +58,7 @@ const AddExpenseForm = ({
           {...register("amount", { required: true, valueAsNumber: true })}
         />
       </TableCell>
-      <TableCell>
+      <TableCell className="pl-3">
         <input
           className="h-10 rounded-md bg-transparent border border-gray-600 pl-2 pr-2"
           style={{ appearance: "none" }}
@@ -66,7 +66,7 @@ const AddExpenseForm = ({
           {...register("date", { required: true })}
         />
       </TableCell>
-      <TableCell>
+      <TableCell className="pl-3">
         <button
           className="flex w-full justify-center"
           type="submit"
