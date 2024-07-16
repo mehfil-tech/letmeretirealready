@@ -35,8 +35,8 @@ const CategorySelecter: React.FC<CategorySelecterProps> = ({
             className="bg-gray-700 p-2 rounded-lg flex flex-col justify-center items-end"
             style={{width: 100+300*category.total/totalExpense }}
           >
-            <div className="font-medium text-sm">{category.name}</div>
-            <div className="text-xl font-light">
+            <div className="font-semibold text-sm">{category.name}</div>
+            <div className="text-xl font-light text-gray-300">
               {numberToRupeeFormatter(category.total)}
             </div>
           </button>
