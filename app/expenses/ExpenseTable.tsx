@@ -39,7 +39,7 @@ const ExpenseTable = ({
   const headers = table?.getHeaderGroups()[0].headers;
   console.log(JSON.stringify(expenses[0]?.category));
   return (
-    <Table className="w-min">
+    <Table className="w-min ml-2">
       <TableHeader>
         {headers.map((header) => (
           <TableHead key={header.id} className="font-medium">
