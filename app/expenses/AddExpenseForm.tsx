@@ -40,7 +40,8 @@ const AddExpenseForm = ({
       </TableCell>
       <TableCell className="pl-3">
         <select
-          className="h-10 rounded-md bg-transparent border border-gray-600 pl-2 pr-2"
+          className="h-10 rounded-md bg-transparent border border-gray-600 pl-2 pr-2 w-28"
+          style={{ appearance: "none" }}
           {...register("category", { required: true })}
         >
           {categories?.map((category) => (
