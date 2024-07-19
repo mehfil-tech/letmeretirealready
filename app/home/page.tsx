@@ -1,10 +1,10 @@
 import { Suspense } from "react";
-import Expenses from "./Expenses";
+import Expenses from "./ExpenseTable";
 
 const Home = () => {
   return (
-    <div>
-      <Suspense fallback={<div>Loading...</div>}>
+    <div className="flex justify-center">
+      <Suspense>
         <Expenses />
       </Suspense>
     </div>

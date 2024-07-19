@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { ExpenseTableColumns } from "./ExpenseTableColumns";
 import {
   Table,
@@ -8,37 +8,66 @@ import {
   TableHeader,
   TableRow,
 } from "@components/ui/table";
-import { IoTrash } from "react-icons/io5";
 import AddExpenseForm from "./AddExpenseForm";
 import { numberToRupeeFormatter } from "./numberToRupeeFormatter";
-import { Expense } from "./models";
 import DeleteButton from "./DeleteButton";
+import { getCategories, getExpenses, getPaymentMethods } from "./actions";
+import { format } from "date-fns";
 
-async function ExpenseTable({ expenses }: { expenses: Expense[] }) {
+async function ExpenseTable() {
+  const expenses = await getExpenses();
+
+  async function renderAddExpenseForm() {
+    const categories = await getCategories();
+    const payment_methods = await getPaymentMethods();
+    return (
+      <AddExpenseForm
+        categories={categories}
+        payment_methods={payment_methods}
+      />
+    );
+  }
+
   return (
-    <Table className="w-min ml-2">
-      <TableHeader>
-        {ExpenseTableColumns.map(({ header }, index) => (
-          <TableHead key={index} className="font-medium">
-            {header as React.ReactNode}
-          </TableHead>
-        ))}
-      </TableHeader>
-      <TableBody>
-        <AddExpenseForm categories={[]} />
-        {expenses.map((expense) => (
-          <TableRow key={expense.id}>
-            <TableCell>{expense.description}</TableCell>
-            <TableCell>{expense.expense_categories?.name ?? "Other"}</TableCell>
-            <TableCell>{numberToRupeeFormatter(expense.amount)}</TableCell>
-            <TableCell>{new Date(expense.date).toDateString()}</TableCell>
-            <TableCell>
-              <DeleteButton id={expense.id as string} />
-            </TableCell>
+    <div>
+      <Table className="w-min ml-2 ">
+        <TableHeader>
+          <TableRow>
+            {ExpenseTableColumns.map((column) => (
+              <TableHead className="font-medium" key={column?.header}>
+                {column?.header}
+              </TableHead>
+            ))}
           </TableRow>
-        ))}
-      </TableBody>
-    </Table>
+        </TableHeader>
+        <TableBody>
+          <Suspense
+            fallback={
+              <AddExpenseForm
+                categories={[{ id: "1", name: "Other" }]}
+                payment_methods={[{ id: "1", name: "Cash" }]}
+              />
+            }
+          >
+            {renderAddExpenseForm()}
+          </Suspense>
+          {expenses.map((expense) => (
+            <TableRow key={expense.id}>
+              <TableCell>{expense.description}</TableCell>
+              <TableCell>{numberToRupeeFormatter(expense.amount)}</TableCell>
+              <TableCell>
+                {format(new Date(expense.date), "dd/MM/yy hh:mm a")}
+              </TableCell>
+              <TableCell>{expense.expense_categories?.name}</TableCell>
+              <TableCell>{expense.payment_methods?.name}</TableCell>
+              <TableCell>
+                <DeleteButton id={expense.id as string} />
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </div>
   );
 }
 

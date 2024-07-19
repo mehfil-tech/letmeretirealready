@@ -1,34 +1,68 @@
-'use client';
-import React from "react";
+"use client";
+import React, { useTransition } from "react";
 import { useForm } from "react-hook-form";
-import { Expense } from "@models/Expense";
 import { TableCell, TableRow } from "@components/ui/table";
 import { IoAddCircle } from "react-icons/io5";
-import { ExpenseCategory } from "@models/ExpenseCategory";
+import { addExpense } from "./actions";
 
-const AddExpenseForm = ({
-  onSubmit,
+function AddExpenseForm({
   categories,
+  payment_methods,
 }: {
-  onSubmit: (data: Expense) => void;
-  categories: ExpenseCategory[];
-}) => {
+  categories: {
+    id: any;
+    name: any;
+  }[];
+  payment_methods: {
+    id: any;
+    name: any;
+  }[];
+}) {
+  const [isPending, startTransition] = useTransition();
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm({
+  } = useForm<{
+    description: string;
+    amount: number| string | undefined;
+    date: Date;
+    expense_category: number;
+    payment_method: number;
+  }>({
     defaultValues: {
       description: "",
-      amount: 0,
-      date: "",
-      category: "Other",
+      amount: undefined,
+      date: new Date(),
+      expense_category: 56,
+      payment_method: 1,
     },
   });
-  const onSubmitHandler = (data: any) => {
-    reset();
-    onSubmit({ ...data, category: { name: data.category } });
+  const onSubmitHandler = (data: {
+    description: string;
+    amount: number;
+    date: Date;
+    expense_category: number;
+    payment_method: number;
+  }) => {
+    startTransition(() => {
+      reset({ ...data, description: "", amount: "" });
+      console.log(data.expense_category, categories);
+      const description =
+        data.description.trim().length === 0
+          ? categories.find((category) => category.id == data.expense_category)
+              ?.name +
+            " " +
+            data.amount
+          : data.description;
+      addExpense({ ...data, description });
+    });
+  };
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      handleSubmit(onSubmitHandler)();
+    }
   };
   return (
     <TableRow>
@@ -36,21 +70,8 @@ const AddExpenseForm = ({
         <input
           className="h-10 rounded-md bg-transparent border border-gray-600 pl-2 pr-2"
           placeholder={"New Expense"}
-          {...register("description", { required: true })}
+          {...register("description")}
         />
-      </TableCell>
-      <TableCell className="pl-3">
-        <select
-          className="h-10 rounded-md bg-transparent border border-gray-600 pl-2 pr-2 w-28"
-          style={{ appearance: "none" }}
-          {...register("category", { required: true })}
-        >
-          {categories?.map((category) => (
-            <option key={category.id} value={category.name}>
-              {category.name}
-            </option>
-          ))}
-        </select>
       </TableCell>
       <TableCell className="pl-3">
         <input
@@ -58,6 +79,7 @@ const AddExpenseForm = ({
           style={{ appearance: "none" }}
           placeholder={"2400"}
           {...register("amount", { required: true, valueAsNumber: true })}
+          onKeyDown={handleKeyDown}
         />
       </TableCell>
       <TableCell className="pl-3">
@@ -65,9 +87,36 @@ const AddExpenseForm = ({
           className="h-10 rounded-md bg-transparent border border-gray-600 pl-2 pr-2"
           style={{ appearance: "none" }}
           type="datetime-local"
-          {...register("date", { required: true })}
+          {...register("date")}
         />
       </TableCell>
+      <TableCell className="pl-3">
+        <select
+          className="h-10 rounded-md bg-transparent border border-gray-600 pl-2 pr-2 w-32"
+          style={{ appearance: "none" }}
+          {...register("expense_category")}
+        >
+          {categories?.map((category) => (
+            <option key={category.id} value={category.id}>
+              {category.name}
+            </option>
+          ))}
+        </select>
+      </TableCell>
+      <TableCell className="pl-3">
+        <select
+          className="h-10 rounded-md bg-transparent border border-gray-600 pl-2 pr-2 w-32"
+          style={{ appearance: "none" }}
+          {...register("payment_method")}
+        >
+          {payment_methods?.map((paymentMethod) => (
+            <option key={paymentMethod.id} value={paymentMethod.id}>
+              {paymentMethod.name}
+            </option>
+          ))}
+        </select>
+      </TableCell>
+
       <TableCell className="pl-3">
         <button
           className="flex w-full justify-center"
@@ -79,5 +128,5 @@ const AddExpenseForm = ({
       </TableCell>
     </TableRow>
   );
-};
+}
 export default AddExpenseForm;

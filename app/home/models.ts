@@ -11,4 +11,12 @@ export type Expense = {
     id: number;
     name: string;
   };
-}
+};
+
+export type ExpenseForm = {
+  description: string;
+  amount: number;
+  date: Date;
+  expense_category: number;
+  payment_method: number;
+};
