@@ -1,10 +1,10 @@
-import { Timestamp } from "firebase/firestore";
-
 export interface Expense {
   id?: string;
-  userId?: string;
+  user_id?: string;
+  created_at?: Date;
   amount: number;
   description: string;
-  date: Timestamp;
-  category: { id: string; name: string };
+  date: Date;
+  category: number;
+  payment_method: number;
 }

@@ -1,3 +1,4 @@
+'use client';
 import React from "react";
 import { useForm } from "react-hook-form";
 import { Expense } from "@models/Expense";
@@ -63,7 +64,7 @@ const AddExpenseForm = ({
         <input
           className="h-10 rounded-md bg-transparent border border-gray-600 pl-2 pr-2"
           style={{ appearance: "none" }}
-          type="date"
+          type="datetime-local"
           {...register("date", { required: true })}
         />
       </TableCell>

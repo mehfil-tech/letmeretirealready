@@ -2,7 +2,6 @@ import {
   FinancialActivity,
   PlaceholderFinancialActivity,
 } from "@models/FinancialActivity";
-import { useUserStore } from "@store/User";
 import { useEffect, useState } from "react";
 import { IoAdd, IoCheckmark, IoClose, IoCaretDown } from "react-icons/io5";
 import DatePicker from "react-datepicker";
@@ -22,7 +21,6 @@ function AddFinancialActivity() {
   const [financialActivity, setFinancialActivity] = useState<FinancialActivity>(
     PlaceholderFinancialActivity
   );
-  const { addFinancialActivity } = useUserStore();
   const [inputValidity, setInputValidity] = useState(INPUT_VALIDITY.UNCHECKED);
   const [newActivityVisible, setNewActivityVisible] = useState(false);
 

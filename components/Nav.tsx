@@ -15,10 +15,9 @@ import {
   IoPerson,
   IoSettings,
 } from "react-icons/io5";
-import { signInWithPopup, auth, GoogleAuthProvider } from "../lib/firebase";
-import useAuth from "@lib/useAuth";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { useUserStore } from "@store/user";
 
 function NavLink({
   href,
@@ -46,7 +45,8 @@ function NavLink({
 }
 
 function Nav() {
-  const { user, loading } = useAuth();
+  // TODO add login implementation
+  const { user } = useUserStore();
   const pathname = usePathname();
   const [menuVisible, setMenuVisible] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -66,18 +66,18 @@ function Nav() {
     }
   };
   const signInWithGoogle = () => {
-    signInWithPopup(auth, new GoogleAuthProvider());
+    // TODO Implement Google sign in
   };
   return (
     <nav className="p-6 flex justify-between items-center sticky top-0 w-full bg-white dark:bg-gray-800 z-50">
       <Link
-        href={user && !user.isAnonymous ? "/user" : "/"}
+        href={user ? "/user" : "/"}
         className={`${
           pathname === "/" ? "sm:ml-[90px]" : ""
         } py-2 px-4 border-[0.5px] border-black dark:border-white flex justify-center items-center`}
       >
         <p className="text-sm leading-snug font-semibold">
-          {user?.displayName ?? "let me retire already"}
+          {user?.data?.user?.email ?? "let me retire already"}
         </p>
       </Link>
       {/* Desktop menu */}

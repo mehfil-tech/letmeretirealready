@@ -1,13 +1,8 @@
 // User Info Component
-
 "use client";
-
-import useAuth from "@lib/useAuth";
-import { useUserStore } from "@store/User";
 import { calculateDateToExceedValue } from "@utils/calculateRetirement";
 
 function UserInfo() {
-  const { financialActivities, inflation } = useUserStore();
   const { date, value, monthlyExpenses } = calculateDateToExceedValue(
     financialActivities,
     inflation
