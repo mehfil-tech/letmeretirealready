@@ -6,16 +6,22 @@ import { createClient } from "@/utils/supabase/server";
 import { Expense, ExpenseForm } from "./models";
 import { revalidatePath } from "next/cache";
 
-export async function getExpenses() {
+export async function getExpenses(page: number, perPage: number) {
   const supabase = createClient();
+
+  const timeStart = Date.now();
 
   const { data, error } = await supabase
     .from("expenses")
     .select(
       `id, description, amount, expense_categories (id, name), payment_methods (id, name), date`
     )
+    .range((page - 1) * perPage, page * perPage - 1)
     .returns<Expense[]>()
     .order("date", { ascending: false });
+
+  const timeEnd = Date.now();
+  console.log(`Expense list took ${timeEnd - timeStart}ms`);
 
   if (error) {
     redirect("/error");
@@ -27,10 +33,7 @@ export async function getExpenses() {
 export async function addExpense(expense: ExpenseForm) {
   const supabase = createClient();
 
-  const timeStart = Date.now();
   const { error } = await supabase.from("expenses").insert([expense]);
-  const timeEnd = Date.now();
-  console.log(`Add expense took ${timeEnd - timeStart}ms`);
 
   if (error) {
     console.log(error);

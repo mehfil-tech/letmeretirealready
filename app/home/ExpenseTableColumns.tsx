@@ -3,12 +3,12 @@ import { ColumnDef } from "@tanstack/react-table";
 
 export const ExpenseTableColumns = [
   {
-    header: "Description",
-    accessor: "description",
-  },
-  {
     header: "Amount",
     accessor: "amount",
+  },
+  {
+    header: "Description",
+    accessor: "description",
   },
   {
     header: "Date",

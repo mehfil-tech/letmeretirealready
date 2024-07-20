@@ -26,7 +26,7 @@ function AddExpenseForm({
     formState: { errors },
   } = useForm<{
     description: string;
-    amount: number| string | undefined;
+    amount: number | string | undefined;
     date: Date;
     expense_category: number;
     payment_method: number;
@@ -66,16 +66,9 @@ function AddExpenseForm({
   };
   return (
     <TableRow>
-      <TableCell className="pl-3">
+      <TableCell className="pr-3">
         <input
-          className="h-10 rounded-md bg-transparent border border-gray-600 pl-2 pr-2"
-          placeholder={"New Expense"}
-          {...register("description")}
-        />
-      </TableCell>
-      <TableCell className="pl-3">
-        <input
-          className="h-10 rounded-md bg-transparent border border-gray-600 pl-2 pr-2"
+          className="h-10 rounded-md bg-transparent border border-gray-500 pl-2 pr-2 text-end w-24"
           style={{ appearance: "none" }}
           placeholder={"2400"}
           {...register("amount", { required: true, valueAsNumber: true })}
@@ -84,15 +77,22 @@ function AddExpenseForm({
       </TableCell>
       <TableCell className="pl-3">
         <input
-          className="h-10 rounded-md bg-transparent border border-gray-600 pl-2 pr-2"
-          style={{ appearance: "none" }}
+          className="h-10 rounded-md bg-transparent border border-gray-500 pl-2 pr-2 w-full"
+          placeholder={"New Expense"}
+          {...register("description")}
+        />
+      </TableCell>
+      <TableCell className="pl-3">
+        <input
+          className="h-10 rounded-md bg-transparent border border-gray-500 pl-2 pr-2"
+          style={{ appearance: "none", WebkitAppearance: "none" }}
           type="datetime-local"
           {...register("date")}
         />
       </TableCell>
       <TableCell className="pl-3">
         <select
-          className="h-10 rounded-md bg-transparent border border-gray-600 pl-2 pr-2 w-32"
+          className="h-10 rounded-md bg-transparent border border-gray-500 pl-2 pr-2 w-32 appearance-none"
           style={{ appearance: "none" }}
           {...register("expense_category")}
         >
@@ -105,7 +105,7 @@ function AddExpenseForm({
       </TableCell>
       <TableCell className="pl-3">
         <select
-          className="h-10 rounded-md bg-transparent border border-gray-600 pl-2 pr-2 w-32"
+          className="h-10 rounded-md bg-transparent border border-gray-500 pl-2 pr-2 w-32"
           style={{ appearance: "none" }}
           {...register("payment_method")}
         >

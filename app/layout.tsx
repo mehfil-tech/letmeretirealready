@@ -21,14 +21,12 @@ export default function RootLayout({
       <body className="bg-white dark:bg-gray-800">
         <div className="main" />
         <RootStore>
-            <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-              <main className="app justify-center">
-                <Nav />
-                <div className="w-full flex justify-center">
-                  <div className="w-full">{children}</div>
-                </div>
-              </main>
-            </ThemeProvider>
+          <main className="app justify-center">
+            <Nav />
+            <div className="w-full flex justify-center">
+              <div className="w-full">{children}</div>
+            </div>
+          </main>
         </RootStore>
       </body>
     </html>

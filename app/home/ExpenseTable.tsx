@@ -13,9 +13,16 @@ import { numberToRupeeFormatter } from "./numberToRupeeFormatter";
 import DeleteButton from "./DeleteButton";
 import { getCategories, getExpenses, getPaymentMethods } from "./actions";
 import { format } from "date-fns";
+import Link from "next/link";
 
-async function ExpenseTable() {
-  const expenses = await getExpenses();
+async function ExpenseTable({
+  page,
+  perPage,
+}: {
+  page: number;
+  perPage: number;
+}) {
+  const expenses = await getExpenses(page, perPage);
 
   async function renderAddExpenseForm() {
     const categories = await getCategories();
@@ -29,18 +36,19 @@ async function ExpenseTable() {
   }
 
   return (
-    <div>
-      <Table className="w-min ml-2 ">
+    <div className="hidden sm:block">
+      <Table className="shadow-md border-[1px] rounded-lg">
         <TableHeader>
           <TableRow>
-            {ExpenseTableColumns.map((column) => (
-              <TableHead className="font-medium" key={column?.header}>
-                {column?.header}
-              </TableHead>
-            ))}
+            <TableHead className="font-medium text-right">Amount</TableHead>
+            <TableHead className="font-medium">Description</TableHead>
+            <TableHead className="font-medium">Date Time</TableHead>
+            <TableHead className="font-medium">Category</TableHead>
+            <TableHead className="font-medium">Method</TableHead>
+            <TableHead className="font-medium">Action</TableHead>
           </TableRow>
         </TableHeader>
-        <TableBody>
+        <TableBody className="overflow-y-hidden">
           <Suspense
             fallback={
               <AddExpenseForm
@@ -53,12 +61,16 @@ async function ExpenseTable() {
           </Suspense>
           {expenses.map((expense) => (
             <TableRow key={expense.id}>
-              <TableCell>{expense.description}</TableCell>
-              <TableCell>{numberToRupeeFormatter(expense.amount)}</TableCell>
+              <TableCell className="text-end font-medium">
+                {numberToRupeeFormatter(expense.amount)}
+              </TableCell>
+              <TableCell className="w-64">{expense.description}</TableCell>
               <TableCell>
                 {format(new Date(expense.date), "dd/MM/yy hh:mm a")}
               </TableCell>
-              <TableCell>{expense.expense_categories?.name}</TableCell>
+              <TableCell className="w-32">
+                {expense.expense_categories?.name}
+              </TableCell>
               <TableCell>{expense.payment_methods?.name}</TableCell>
               <TableCell>
                 <DeleteButton id={expense.id as string} />
@@ -67,6 +79,25 @@ async function ExpenseTable() {
           ))}
         </TableBody>
       </Table>
+      <div className="flex flex-row space-x-4 justify-end items-center py-4">
+        {/* Displaying x of y results */}
+        <p className="text-gray-500 text-sm font-medium">
+          Displaying {(page - 1) * perPage}-
+          {(page - 1) * perPage + expenses.length} of expensesTotal
+        </p>
+        <Link
+          href={`/home?page=${page - 1}&perPage=10`}
+          className="p-2 bg-gray-700 text-white font-medium rounded-md w-28 text-center"
+        >
+          Previous
+        </Link>
+        <Link
+          href={`/home?page=${page + 1}&perPage=10`}
+          className="p-2 bg-gray-700 text-white font-medium rounded-md w-28 text-center"
+        >
+          Next
+        </Link>
+      </div>
     </div>
   );
 }
