@@ -26,7 +26,7 @@ function AddExpenseForm({
     formState: { errors },
   } = useForm<{
     description: string;
-    amount: number | string | undefined;
+    amount: number;
     date: Date;
     expense_category: number;
     payment_method: number;
@@ -47,7 +47,7 @@ function AddExpenseForm({
     payment_method: number;
   }) => {
     startTransition(() => {
-      reset({ ...data, description: "", amount: "" });
+      reset({ ...data, description: "", amount: 0 });
       console.log(data.expense_category, categories);
       const description =
         data.description.trim().length === 0

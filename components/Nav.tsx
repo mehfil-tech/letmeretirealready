@@ -35,8 +35,8 @@ function NavLink({
     <Link
       href={href}
       onClick={onClick}
-      className={`flex gap-3 items-center p-6 ${
-        isActive ? "text-white font-bold bg-gray-900" : "text-gray-300"
+      className={`items-center text-center px-4 py-2 border-[0.5px] text-sm w-28  ${
+        isActive ? "text-gray-900 font-semibold border-gray-900" : "text-gray-500 border-gray-500"
       }`}
     >
       {children}
@@ -88,13 +88,13 @@ function Nav() {
       >
         <div className="gap-4 flex items-center">
           <NavLink href="/home" currentPath={pathname}>
-            Home
+            home
           </NavLink>
           <NavLink href="/savings" currentPath={pathname}>
-            Savings
+            savings
           </NavLink>
           <NavLink href="/expenses" currentPath={pathname}>
-            Expenses
+            expenses
           </NavLink>
         </div>
       </div>

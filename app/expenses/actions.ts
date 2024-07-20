@@ -11,10 +11,11 @@ export async function getExpenses(page: number, perPage: number) {
 
   const timeStart = Date.now();
 
-  const { data, error } = await supabase
+  const { data, error, count } = await supabase
     .from("expenses")
     .select(
-      `id, description, amount, expense_categories (id, name), payment_methods (id, name), date`
+      `id, description, amount, expense_categories (id, name), payment_methods (id, name), date`,
+      { count: "exact" }
     )
     .range((page - 1) * perPage, page * perPage - 1)
     .returns<Expense[]>()
@@ -27,7 +28,7 @@ export async function getExpenses(page: number, perPage: number) {
     redirect("/error");
   }
 
-  return data;
+  return { data, count, error };
 }
 
 export async function addExpense(expense: ExpenseForm) {
