@@ -77,7 +77,7 @@ function AddExpenseForm({
       </TableCell>
       <TableCell className="pl-3">
         <input
-          className="h-10 rounded-md bg-transparent border border-gray-500 pl-2 pr-2 w-full"
+          className="h-10 rounded-md bg-transparent border border-gray-500 pl-2 pr-2 w-52"
           placeholder={"New Expense"}
           {...register("description")}
         />
@@ -123,7 +123,7 @@ function AddExpenseForm({
           type="submit"
           onClick={handleSubmit(onSubmitHandler)}
         >
-          <IoAddCircle className="text-green-500" size={20} />
+          <IoAddCircle className="text-teal-500" size={24} />
         </button>
       </TableCell>
     </TableRow>

@@ -8,14 +8,19 @@ function Home({
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
   const page = searchParams.page ? parseInt(searchParams.page as string) : 1;
-  const perPage = searchParams.perPage
-    ? parseInt(searchParams.perPage as string)
-    : 10;
+  const month = searchParams.month
+    ? parseInt(searchParams.month as string)
+    : new Date().getMonth();
+  const year = searchParams.year
+    ? parseInt(searchParams.year as string)
+    : new Date().getFullYear();
+
+  console.log("month", month, "year", year);
   return (
     <div className="flex justify-between">
-      <ExpenseInfo />
+      <ExpenseInfo month={month} year={year} />
       <Suspense fallback="loading">
-        <Expenses page={page} perPage={perPage} />
+        <Expenses page={page} />
       </Suspense>
     </div>
   );

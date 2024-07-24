@@ -35,8 +35,10 @@ function NavLink({
     <Link
       href={href}
       onClick={onClick}
-      className={`items-center text-center px-4 py-2 border-[0.5px] text-sm w-28  ${
-        isActive ? "text-gray-900 font-semibold border-gray-900" : "text-gray-500 border-gray-500"
+      className={`items-center font-semibold text-center px-4 py-2 border-[0.5px] text-sm w-28  ${
+        isActive
+          ? "text-white  border-gray-900 bg-teal-700"
+          : "text-gray-500 border-gray-500"
       }`}
     >
       {children}
@@ -76,7 +78,7 @@ function Nav() {
           pathname === "/" ? "sm:ml-[90px]" : ""
         } py-2 px-4 border-[0.5px] border-black dark:border-white flex justify-center items-center`}
       >
-        <p className="text-sm leading-snug font-semibold">
+        <p className="text-sm leading-snug font-semibold text-teal-700">
           {user?.data?.user?.email ?? "let me retire already"}
         </p>
       </Link>
@@ -90,11 +92,20 @@ function Nav() {
           <NavLink href="/home" currentPath={pathname}>
             home
           </NavLink>
+          <NavLink href="/income" currentPath={pathname}>
+            income
+          </NavLink>
           <NavLink href="/savings" currentPath={pathname}>
             savings
           </NavLink>
           <NavLink href="/expenses" currentPath={pathname}>
             expenses
+          </NavLink>
+          <NavLink href="/goals" currentPath={pathname}>
+            emis
+          </NavLink>
+          <NavLink href="/cards" currentPath={pathname}>
+            cards
           </NavLink>
         </div>
       </div>
