@@ -1,25 +1,28 @@
-"use client";
-import AddExpenseForm from "./AddExpenseForm";
-import { useExpenseStore } from "@store/Expense";
-import { Expense } from "@models/Expense";
-import ExpenseTable from "./ExpenseTable";
+import { Suspense } from "react";
+import Expenses from "./ExpenseTable";
+import ExpenseInfo from "./ExpenseInfo";
 
-function Home() {
-  const { expenses, addExpense, deleteExpense } = useExpenseStore();
-  const onSubmit = (values: Expense) => {
-    console.log(values);
-    addExpense(values);
-  };
+function Home({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | string[] | undefined };
+}) {
+  const page = searchParams.page ? parseInt(searchParams.page as string) : 1;
+  const month = searchParams.month
+    ? parseInt(searchParams.month as string)
+    : new Date().getMonth();
+  const year = searchParams.year
+    ? parseInt(searchParams.year as string)
+    : new Date().getFullYear();
+
+  console.log("month", month, "year", year);
   return (
-    <section className="grid justify-center h-[80vh]">
-      <div className="sm:overflow-y-auto">
-        <ExpenseTable
-          expenses={expenses}
-          deleteExpense={deleteExpense}
-          onSubmit={onSubmit}
-        />
-      </div>
-    </section>
+    <div className="flex justify-between">
+      <ExpenseInfo month={month} year={year} />
+      <Suspense fallback="loading">
+        <Expenses page={page} />
+      </Suspense>
+    </div>
   );
 }
 

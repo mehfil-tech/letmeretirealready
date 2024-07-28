@@ -1,68 +1,132 @@
-import React from "react";
+"use client";
+import React, { useTransition } from "react";
 import { useForm } from "react-hook-form";
-import { Expense } from "@models/Expense";
 import { TableCell, TableRow } from "@components/ui/table";
-import { IoAdd } from "react-icons/io5";
+import { IoAddCircle } from "react-icons/io5";
+import { addExpense } from "./actions";
 
-const AddExpenseForm = ({
-  onSubmit,
+function AddExpenseForm({
+  categories,
+  payment_methods,
 }: {
-  onSubmit: (data: Expense) => void;
-}) => {
+  categories: {
+    id: any;
+    name: any;
+  }[];
+  payment_methods: {
+    id: any;
+    name: any;
+  }[];
+}) {
+  const [isPending, startTransition] = useTransition();
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
-  } = useForm({
+  } = useForm<{
+    description: string;
+    amount: number;
+    date: Date;
+    expense_category: number;
+    payment_method: number;
+  }>({
     defaultValues: {
       description: "",
       amount: undefined,
-      date: "",
+      date: new Date(),
+      expense_category: 56,
+      payment_method: 1,
     },
   });
-  const onSubmitHandler = (data: any) => {
-    onSubmit(data);
-
+  const onSubmitHandler = (data: {
+    description: string;
+    amount: number;
+    date: Date;
+    expense_category: number;
+    payment_method: number;
+  }) => {
+    startTransition(() => {
+      reset({ ...data, description: "", amount: 0 });
+      console.log(data.expense_category, categories);
+      const description =
+        data.description.trim().length === 0
+          ? categories.find((category) => category.id == data.expense_category)
+              ?.name +
+            " " +
+            data.amount
+          : data.description;
+      addExpense({ ...data, description });
+    });
+  };
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      handleSubmit(onSubmitHandler)();
+    }
   };
   return (
     <TableRow>
-      <TableCell>
+      <TableCell className="pr-3">
         <input
-          className="h-10 w-64 rounded-md"
-          placeholder={"New Expense"}
-          {...register("description", { required: true })}
-        />
-      </TableCell>
-      <TableCell>
-        <input
-          className="h-10 w-32 rounded-md"
-          style={{ appearance: "none", alignSelf: "end" }}
+          className="h-10 rounded-md bg-transparent border border-gray-500 pl-2 pr-2 text-end w-24"
+          style={{ appearance: "none" }}
           placeholder={"2400"}
           {...register("amount", { required: true, valueAsNumber: true })}
+          onKeyDown={handleKeyDown}
         />
       </TableCell>
-      <TableCell>
+      <TableCell className="pl-3">
         <input
-          className="h-10 w-32 rounded-md"
-          style={{ appearance: "none" }}
-          type="date"
-          {...register("date", { required: true })}
+          className="h-10 rounded-md bg-transparent border border-gray-500 pl-2 pr-2 w-52"
+          placeholder={"New Expense"}
+          {...register("description")}
         />
       </TableCell>
-      <TableCell>
+      <TableCell className="pl-3">
+        <input
+          className="h-10 rounded-md bg-transparent border border-gray-500 pl-2 pr-2"
+          style={{ appearance: "none", WebkitAppearance: "none" }}
+          type="datetime-local"
+          {...register("date")}
+        />
+      </TableCell>
+      <TableCell className="pl-3">
+        <select
+          className="h-10 rounded-md bg-transparent border border-gray-500 pl-2 pr-2 w-32 appearance-none"
+          style={{ appearance: "none" }}
+          {...register("expense_category")}
+        >
+          {categories?.map((category) => (
+            <option key={category.id} value={category.id}>
+              {category.name}
+            </option>
+          ))}
+        </select>
+      </TableCell>
+      <TableCell className="pl-3">
+        <select
+          className="h-10 rounded-md bg-transparent border border-gray-500 pl-2 pr-2 w-32"
+          style={{ appearance: "none" }}
+          {...register("payment_method")}
+        >
+          {payment_methods?.map((paymentMethod) => (
+            <option key={paymentMethod.id} value={paymentMethod.id}>
+              {paymentMethod.name}
+            </option>
+          ))}
+        </select>
+      </TableCell>
+
+      <TableCell className="pl-3">
         <button
           className="flex w-full justify-center"
           type="submit"
-          onClick={handleSubmit(onSubmitHandler, (error) =>
-            console.log("error")
-          )}
+          onClick={handleSubmit(onSubmitHandler)}
         >
-          <div className="bg-green-500 rounded-full p-0.5">
-            <IoAdd color="white" />
-          </div>
+          <IoAddCircle className="text-teal-500" size={24} />
         </button>
       </TableCell>
     </TableRow>
   );
-};
+}
 export default AddExpenseForm;
