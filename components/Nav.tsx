@@ -11,13 +11,9 @@ import {
   IoHome,
   IoInformation,
   IoMenu,
-  IoOptions,
-  IoPerson,
-  IoSettings,
 } from "react-icons/io5";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { useUserStore } from "@store/user";
 
 function NavLink({
   href,
@@ -48,7 +44,6 @@ function NavLink({
 
 function Nav() {
   // TODO add login implementation
-  const { user } = useUserStore();
   const pathname = usePathname();
   const [menuVisible, setMenuVisible] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -73,13 +68,13 @@ function Nav() {
   return (
     <nav className="p-6 flex justify-between items-center sticky top-0 w-full bg-white dark:bg-gray-800 z-50">
       <Link
-        href={user ? "/user" : "/"}
+        href={"/"}
         className={`${
           pathname === "/" ? "sm:ml-[90px]" : ""
         } py-2 px-4 border-[0.5px] border-black dark:border-white flex justify-center items-center`}
       >
         <p className="text-sm leading-snug font-semibold text-teal-700">
-          {user?.data?.user?.email ?? "let me retire already"}
+          {"let me retire already"}
         </p>
       </Link>
       {/* Desktop menu */}

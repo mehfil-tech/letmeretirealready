@@ -1,7 +1,5 @@
 import Nav from "@components/Nav";
 import "@styles/globals.css";
-import { ThemeProvider } from "./themeProvider";
-import RootStore from "@store";
 
 export const metadata = {
   title: "Let me retire already",
@@ -20,14 +18,12 @@ export default function RootLayout({
       </head>
       <body className="bg-white dark:bg-gray-800">
         <div className="main" />
-        <RootStore>
           <main className="app justify-center">
             <Nav />
             <div className="w-full flex justify-center">
               <div className="w-full">{children}</div>
             </div>
           </main>
-        </RootStore>
       </body>
     </html>
   );
